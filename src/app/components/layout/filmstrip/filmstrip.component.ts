@@ -1,5 +1,5 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-filmstrip',
@@ -7,6 +7,8 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./filmstrip.component.scss']
 })
 export class FilmstripComponent implements OnInit {
+  form: FormArray | FormGroup;
+
   images = [
     { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
     { id: 2, url: 'https://images.pexels.com/photos/21261/pexels-photo.jpg?w=940&h=650&auto=compress&cs=tinysrgb' },
@@ -18,15 +20,17 @@ export class FilmstripComponent implements OnInit {
     { id: 8, url: 'https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
   ];
 
-  @ViewChild('form', { read: NgForm, static: false }) form: NgForm;
-
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit() {
-  }
-
-  isSelected(image) {
-    return this.selection.indexOf(image) > -1;
+    const controls = this.images.map(image => {
+      const control = {};
+      control[image.id] = new FormControl(false);
+      return control;
+    });
+    this.form = this.fb.group([...controls]);
   }
 
   @HostListener('document:keyup', ['$event']) moveFocus(event: KeyboardEvent) {
@@ -61,4 +65,10 @@ export class FilmstripComponent implements OnInit {
     }
   }
 
+  getControls(group: FormGroup) {
+    if (group instanceof FormArray) {
+      return group.controls;
+    }
+    return Object.keys(group.controls);
+  }
 }

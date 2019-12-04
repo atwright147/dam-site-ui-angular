@@ -1,10 +1,22 @@
 <div class="previews"></div>
 
-<form #form="ngForm" class="filmstrip">
-  <app-thumbnail
-    *ngFor="let image of images; let i = index;"
-    [imageUrl]="image.url"
-    [imageId]="image.id"
+<form [formGroup]="form" class="filmstrip">
+  <!-- <app-thumbnail
+    *ngFor="let control of form.controls; let i = index;"
+    [control]="control"
+    [imageUrl]="images[i].url"
+    [imageId]="images[i].id"
     [index]="i"
-  ></app-thumbnail>
+  ></app-thumbnail> -->
+
+  <ng-container *ngFor="let control of getControls(form); let i = index;">
+    <input type="checkbox" name="image-{{images[i].id}}" id="image-{{images[i].id}}" [attr.data-index]="i" [formControlName]="control">
+    <label for="image-{{images[i].id}}">
+      <figure>
+        <img [src]="images[i].url" />
+        <figcaption>An elephant at sunset</figcaption>
+      </figure>
+    </label>
+  </ng-container>
+
 </form>
