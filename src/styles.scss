@@ -1,1 +1,58 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  margin: 0;
+  padding: 0;
+}
+
+app-root {
+  display: grid;
+  grid-template-columns: 10rem 75fr;
+  grid-template-rows: 1fr 100fr 1fr;
+  height: 100%;
+  // grid-gap: .5rem;
+}
+
+// body {
+//   display: grid;
+//   grid-template-columns: 10rem 75fr;
+//   grid-template-rows: 1fr 100fr 1fr;
+//   /* grid-gap: .5rem; */
+
+//   margin: 0;
+//   padding: 0;
+// }
+
+aside {
+  padding: 1rem;
+}
+
+header,
+footer {
+  padding: .3rem 1rem;
+}
+
+header,
+footer {
+  background-color: orange;
+  grid-column: 1 / span 2;
+}
+
+aside {
+  background-color: YellowGreen;
+}
+
+main {
+  background-color: PowderBlue;
+}

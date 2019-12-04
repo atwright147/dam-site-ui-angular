@@ -1,0 +1,10 @@
+<div class="previews"></div>
+
+<form #form="ngForm" class="filmstrip">
+  <app-thumbnail
+    *ngFor="let image of images; let i = index;"
+    [imageUrl]="image.url"
+    [imageId]="image.id"
+    [index]="i"
+  ></app-thumbnail>
+</form>

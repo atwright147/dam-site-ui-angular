@@ -1,0 +1,15 @@
+:host {
+  display: grid;
+  grid-template-rows: 1fr 210px;
+  height: 100%;
+}
+
+.previews {
+  background-color: darkslateblue;
+}
+
+.filmstrip {
+  background-color: darksalmon;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
