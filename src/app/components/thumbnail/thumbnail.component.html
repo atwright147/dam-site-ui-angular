@@ -1,4 +1,4 @@
-<input type="checkbox" name="image-{{imageId}}" id="image-{{imageId}}" [attr.data-index]="index" [value]="false" ngModel>
+<input type="checkbox" name="image-{{imageId}}" id="image-{{imageId}}" [attr.data-index]="index" [value]="value" [attr.checked]="value" />
 <label for="image-{{imageId}}">
   <figure>
     <img [src]="imageUrl" />
