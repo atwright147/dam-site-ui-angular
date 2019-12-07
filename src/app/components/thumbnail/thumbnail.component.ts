@@ -1,5 +1,7 @@
-import { Component, Input, forwardRef, HostBinding } from '@angular/core';
+import { Component, forwardRef, HostBinding, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+// https://alligator.io/angular/custom-form-control/
 
 @Component({
   selector: 'app-thumbnail',
@@ -11,59 +13,51 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       useExisting: forwardRef(() => ThumbnailComponent),
       multi: true
     }
-  ]
+  ],
 })
 export class ThumbnailComponent implements ControlValueAccessor {
-  @HostBinding('attr.id')
-  externalId = '';
-
-  @Input()
-  set id(value: string) {
-    this._ID = value;
-    this.externalId = null;
-  }
-
+  @Input() disabled = false;
   @Input() imageUrl: string;
   @Input() imageId: string;
   @Input() index: number;
 
-  get id() {
-    return this._ID;
-  }
+  private value: boolean;
 
-  private _ID = '';
+  // Function to call when the model changes.
+  onChange = (value: boolean) => {
+    this.value = value;
+  };
 
-  @Input('value') _value = false;
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  // Function to call when the input is touched.
+  onTouched = () => {};
 
-  get value() {
-    return this._value;
-  }
-
-  set value(val) {
-    this._value = val;
-    this.onChange(val);
-    this.onTouched();
-  }
-
-  constructor() {}
-
-  registerOnChange(fn) {
-    this.onChange = fn;
-  }
-
-  writeValue(value) {
-    if (value) {
-      this.value = value;
+  toggle() {
+    if (!this.disabled) {
+      this.value = !this.value;
+      this.writeValue(this.value);
     }
   }
 
-  registerOnTouched(fn) {
+  // Allows Angular to update the model.
+  // Update the model and changes needed for the view here.
+  writeValue(value: boolean): void {
+    this.onChange(value);
+  }
+
+  // Allows Angular to register a function to call when the model changes.
+  // Save the function as a property to call later here.
+  registerOnChange(fn: (value: boolean) => void): void {
+    this.onChange = fn;
+  }
+
+  // Allows Angular to register a function to call when the input has been touched.
+  // Save the function as a property to call later here.
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  switch() {
-    this.value = !this.value;
+  // Allows Angular to disable the input.
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 }

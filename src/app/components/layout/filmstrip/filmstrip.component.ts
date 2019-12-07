@@ -25,12 +25,11 @@ export class FilmstripComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const controls = this.images.map(image => {
-      const control = {};
-      control[image.id] = new FormControl(false);
-      return control;
-    });
-    this.form = this.fb.group([...controls]);
+    const controls = {};
+    for (const image of this.images) {
+      controls[image.id] = [{ value: false, disabled: false }];
+    }
+    this.form = this.fb.group(controls);
   }
 
   @HostListener('document:keyup', ['$event']) moveFocus(event: KeyboardEvent) {

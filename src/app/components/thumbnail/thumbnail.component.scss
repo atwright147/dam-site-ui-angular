@@ -16,6 +16,7 @@ figure {
 label {
   display: inline-block;
   border: 2px solid transparent;
+  cursor: pointer;
 }
 
 input[type="checkbox"] {
@@ -33,3 +34,8 @@ input[type="checkbox"] {
     border-color: orange;
   }
 }
+
+.disabled {
+  opacity: 0.25;
+}
+

@@ -1,4 +1,6 @@
-<div class="previews"></div>
+<div class="previews">
+  <pre style="color: white;">{{ form.value | json }}</pre>
+</div>
 
 <form [formGroup]="form" class="filmstrip">
   <app-thumbnail
@@ -8,15 +10,4 @@
     [imageId]="images[i].id"
     [index]="i"
   ></app-thumbnail>
-
-  <!-- <ng-container *ngFor="let control of getControls(form); let i = index;">
-    <input type="checkbox" name="image-{{images[i].id}}" id="image-{{images[i].id}}" [attr.data-index]="i" [formControlName]="control">
-    <label for="image-{{images[i].id}}">
-      <figure>
-        <img [src]="images[i].url" />
-        <figcaption>An elephant at sunset</figcaption>
-      </figure>
-    </label>
-  </ng-container> -->
-
 </form>
