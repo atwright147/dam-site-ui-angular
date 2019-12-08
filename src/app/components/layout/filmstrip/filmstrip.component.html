@@ -1,5 +1,8 @@
 <div class="previews">
-  <pre style="color: white;">{{ form.value | json }}</pre>
+  <pre style="color: white;">
+{{ form.value | json }}
+{{ selected | json }}
+  </pre>
 </div>
 
 <form [formGroup]="form" class="filmstrip">

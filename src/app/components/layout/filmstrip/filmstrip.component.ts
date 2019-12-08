@@ -1,13 +1,16 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-filmstrip',
   templateUrl: './filmstrip.component.html',
   styleUrls: ['./filmstrip.component.scss']
 })
-export class FilmstripComponent implements OnInit {
-  form: FormArray | FormGroup;
+export class FilmstripComponent implements OnInit, OnDestroy {
+  form: FormGroup;
+  formChangeSub: Subscription;
+  selected = [];
 
   images = [
     { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
@@ -30,6 +33,19 @@ export class FilmstripComponent implements OnInit {
       controls[image.id] = [{ value: false, disabled: false }];
     }
     this.form = this.fb.group(controls);
+
+    this.formChangeSub = this.form.valueChanges.subscribe((val) => {
+      this.selected = [];
+      Object.keys(val).forEach((key: string) => {
+        if (val[key]) {
+          this.selected.push(this.images.filter(item => item.id.toString() === key)[0]);
+        }
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    this.formChangeSub.unsubscribe();
   }
 
   @HostListener('document:keyup', ['$event']) moveFocus(event: KeyboardEvent) {
