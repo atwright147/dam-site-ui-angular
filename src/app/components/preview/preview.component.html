@@ -1,0 +1,5 @@
+<div class="grid grid-{{numSelected}}">
+  <figure *ngFor="let image of selected$ | async" class="thumb">
+    <img [src]="image.url" />
+  </figure>
+</div>

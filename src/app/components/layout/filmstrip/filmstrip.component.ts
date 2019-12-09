@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
+import { ImagesService } from '../../../services/images/images.service';
+
 @Component({
   selector: 'app-filmstrip',
   templateUrl: './filmstrip.component.html',
@@ -10,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class FilmstripComponent implements OnInit, OnDestroy {
   form: FormGroup;
   formChangeSub: Subscription;
-  selected = [];
+  selected$ = this.imagesService.selected$;
 
   images = [
     { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
@@ -24,7 +26,8 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private fb: FormBuilder,
+    private readonly fb: FormBuilder,
+    private readonly imagesService: ImagesService,
   ) { }
 
   ngOnInit() {
@@ -35,12 +38,13 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     this.form = this.fb.group(controls);
 
     this.formChangeSub = this.form.valueChanges.subscribe((val) => {
-      this.selected = [];
+      const selection = [];
       Object.keys(val).forEach((key: string) => {
         if (val[key]) {
-          this.selected.push(this.images.filter(item => item.id.toString() === key)[0]);
+          selection.push(this.images.filter(item => item.id.toString() === key)[0]);
         }
       });
+      this.imagesService.selected = selection;
     });
   }
 

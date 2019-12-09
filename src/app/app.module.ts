@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FilmstripComponent } from './components/layout/filmstrip/filmstrip.component';
 import { ThumbnailComponent } from './components/thumbnail/thumbnail.component';
+import { PreviewComponent } from './components/preview/preview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FilmstripComponent,
     ThumbnailComponent,
+    PreviewComponent,
   ],
   imports: [
     AppRoutingModule,
