@@ -15,7 +15,6 @@ figure {
 }
 
 .grid {
-  color: white;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -24,11 +23,18 @@ figure {
     display: flex;
     flex: 1 1 auto;
     box-sizing: border-box;
-    outline: 1px solid black;
 
-    img {
-      display: block;
-      width: 250px;
+    .constraint {
+      height: 100%;
+      width: 100%;
+
+      margin: 3px;
+
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      image-orientation: from-image;
     }
   }
 

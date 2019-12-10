@@ -8,7 +8,7 @@ import { ImagesService } from '../../services/images/images.service';
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit {
-  selected$ = this.imagesService.selected$;
+  previewSelection$ = this.imagesService.previewSelection$;
 
   constructor(
     private readonly imagesService: ImagesService,
@@ -17,11 +17,10 @@ export class PreviewComponent implements OnInit {
   ngOnInit() {}
 
   get numSelected() {
-    let selected = [];
-    this.selected$.subscribe(
+    let selected;
+    this.previewSelection$.subscribe(
       (data) => selected = data,
     );
-    const len = selected.length;
-    return len > 6 ? 6 : len;
+    return selected.length;
   }
 }

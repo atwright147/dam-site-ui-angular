@@ -13,6 +13,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   form: FormGroup;
   formChangeSub: Subscription;
   selected$ = this.imagesService.selected$;
+  previewSelection$ = this.imagesService.previewSelection$;
 
   images = [
     { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
@@ -45,6 +46,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
         }
       });
       this.imagesService.selected = selection;
+      this.imagesService.previewSelection = selection.splice(0, 6);
     });
   }
 
