@@ -9,6 +9,6 @@
 />
 <label for="image-{{imageId}}" [class.disabled]="disabled">
   <figure>
-    <img [src]="imageUrl" />
+    <div class="thumb" [ngStyle]="{'background-image': 'url(&quot;' + imageUrl + '&quot;)'}"></div>
   </figure>
 </label>

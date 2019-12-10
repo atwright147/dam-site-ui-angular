@@ -24,6 +24,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     { id: 6, url: 'https://images.pexels.com/photos/302515/pexels-photo-302515.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
     { id: 7, url: 'https://images.pexels.com/photos/301682/pexels-photo-301682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
     { id: 8, url: 'https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+    { id: 9, url: 'https://images.pexels.com/photos/3345787/pexels-photo-3345787.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
   ];
 
   constructor(
