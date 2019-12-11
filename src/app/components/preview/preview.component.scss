@@ -15,64 +15,73 @@ figure {
 }
 
 .grid {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows:    1fr 1fr;
+  grid-gap: 5px;
+}
 
-  .thumb {
-    display: flex;
-    flex: 1 1 auto;
-    box-sizing: border-box;
+.grid-1 {
+  figure {
+    grid-row-end: span 2;
+    grid-column-end: span 6;
+  }
+}
 
-    .constraint {
-      height: 100%;
-      width: 100%;
+.grid-2 {
+  figure {
+    grid-row-end: span 2;
+    grid-column-end: span 3;
+  }
+}
 
-      margin: 3px;
-
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain;
-
-      image-orientation: from-image;
-    }
+.grid-3 {
+  figure:nth-of-type(1) {
+    grid-column-end: span 3
   }
 
-  &.grid-1 {
-    .thumb {
-        min-width: 100%;
-    }
+  figure:nth-of-type(2) {
+    grid-column-end: span 3
   }
-  &.grid-2 {
-    .thumb {
-        min-width: 50%;
-        max-width: 50%;
-    }
+
+  figure:nth-of-type(3) {
+    grid-column-end: span 6
   }
-  &.grid-3 {
-    .thumb:nth-child(1) {
-        width: 50%;
-    }
-    .thumb:nth-child(2) {
-        width: 50%;
-    }
-    .thumb:nth-child(3) {
-        min-width: 100%;
-    }
+}
+
+.grid-4 {
+  figure {
+    grid-column-end: span 3
   }
-  &.grid-4 {
-    .thumb {
-        min-width: 50%;
-    }
+}
+
+.grid-5 {
+  figure {
+    grid-column-end: span 2
   }
-  &.grid-5 {
-    .thumb {
-        min-width: 33%;
-    }
+
+  figure:nth-of-type(4) {
+    grid-column-end: span 3
   }
-  &.grid-6 {
-    .thumb {
-        min-width: 33%;
-    }
+
+  figure:nth-of-type(5) {
+    grid-column-end: span 3
   }
+}
+
+.grid-6 {
+  figure {
+    grid-column-end: span 2
+  }
+}
+
+.constraint {
+  width: 100%;
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  image-orientation: from-image;
 }
