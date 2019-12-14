@@ -7,9 +7,9 @@ import { Image } from '../../interfaces/image';
   providedIn: 'root'
 })
 export class ImagesService {
-  private _images = new BehaviorSubject<Image[]>([]);
-  private _selected = new BehaviorSubject<Image[]>([]);
-  private _previewSelection = new BehaviorSubject<Image[]>([]);
+  private readonly _images = new BehaviorSubject<Image[]>([]);
+  private readonly _selected = new BehaviorSubject<Image[]>([]);
+  private readonly _previewSelection = new BehaviorSubject<Image[]>([]);
 
   images$: Observable<Image[]> = this._images.asObservable();
   selected$: Observable<Image[]> = this._selected.asObservable();
