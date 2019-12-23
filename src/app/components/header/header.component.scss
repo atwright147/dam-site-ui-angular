@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.ident
+.tools {
+  flex-grow: 0;
+}
+
+.path {
+  display: flex;
+  flex-grow: 1;
+  margin: 0 20px;
+
+  input {
+    flex-grow: 1;
+    padding: 5px;
+  }
+}

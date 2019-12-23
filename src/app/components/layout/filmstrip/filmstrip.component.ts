@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { ImagesService } from '../../../services/images/images.service';
+import { MediaService } from '../../../services/media.service';
 
 @Component({
   selector: 'app-filmstrip',
@@ -12,8 +12,8 @@ import { ImagesService } from '../../../services/images/images.service';
 export class FilmstripComponent implements OnInit, OnDestroy {
   form: FormGroup;
   formChangeSub: Subscription;
-  selected$ = this.imagesService.selected$;
-  previewSelection$ = this.imagesService.previewSelection$;
+  selected$ = this.mediaService.selected$;
+  previewSelection$ = this.mediaService.previewSelection$;
 
   images = [
     { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
@@ -29,7 +29,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly imagesService: ImagesService,
+    private readonly mediaService: MediaService,
   ) { }
 
   ngOnInit() {
@@ -46,8 +46,8 @@ export class FilmstripComponent implements OnInit, OnDestroy {
           selection.push(this.images.filter(item => item.id.toString() === key)[0]);
         }
       });
-      this.imagesService.selected = selection;
-      this.imagesService.previewSelection = selection.splice(0, 6);
+      this.mediaService.selected = selection;
+      this.mediaService.previewSelection = selection.splice(0, 6);
     });
   }
 

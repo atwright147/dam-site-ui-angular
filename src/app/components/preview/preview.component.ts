@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ImagesService } from '../../services/images/images.service';
+import { MediaService } from '../../services/media.service';
 
 @Component({
   selector: 'app-preview',
@@ -8,10 +8,10 @@ import { ImagesService } from '../../services/images/images.service';
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit {
-  previewSelection$ = this.imagesService.previewSelection$;
+  previewSelection$ = this.mediaService.previewSelection$;
 
   constructor(
-    private readonly imagesService: ImagesService,
+    private readonly mediaService: MediaService,
   ) { }
 
   ngOnInit() {}

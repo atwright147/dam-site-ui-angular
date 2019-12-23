@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
+const dirTree = require('directory-tree');
 
 const app = express();
 
@@ -24,6 +26,27 @@ app.post('/api/media', (req, res) => {
   res.status(200);
 });
 
+app.get('/api/folders', (req, res) => {
+  const _path = path.resolve(__dirname, 'folders');
+  console.info(_path);
+  const tree = dirTree(_path, { normalizePath: true });
+  // res.json(tree);
+  const treeFiltered = removeFiles(tree.children);
+  res.json(treeFiltered);
+});
+
 app.listen(PORT, () => {
   console.info(`Example app listening on port ${PORT}`);  // eslint-disable-line no-console
 });
+
+
+
+// helpers
+const removeFiles = (children) => {
+  return children.filter((child) => {
+    if (child.children) {
+      child.children = removeFiles(child.children);
+    }
+    return child.type !== 'file';
+  });
+};
