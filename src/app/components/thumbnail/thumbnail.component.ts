@@ -26,7 +26,7 @@ export class ThumbnailComponent implements ControlValueAccessor {
   // Function to call when the model changes.
   onChange = (value: boolean) => {
     this.value = value;
-  };
+  }
 
   // Function to call when the input is touched.
   onTouched = () => {};

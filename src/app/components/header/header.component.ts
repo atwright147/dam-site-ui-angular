@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.mediaService.path$.subscribe(data => {
-      console.info(data);
       this.form = this.fb.group({
         path: data,
       });
@@ -26,7 +25,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onSubmit() {
-    console.info(this.form.value);
     this.mediaService.setPath(this.form.get('path').value);
   }
 }
