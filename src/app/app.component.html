@@ -1,12 +1,15 @@
 <header>
   <app-header></app-header>
 </header>
+
 <aside>
   <tree-root [nodes]="nodes" [options]="options" (activate)="onEvent($event)"></tree-root>
 </aside>
+
 <main>
   <app-filmstrip></app-filmstrip>
 </main>
+
 <footer>
   <app-footer></app-footer>
 </footer>
