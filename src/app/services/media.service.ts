@@ -8,7 +8,7 @@ import { Image } from '../interfaces/image';
   providedIn: 'root'
 })
 export class MediaService {
-  private _path: string;
+  private readonly _path = new BehaviorSubject<string>('');
   private readonly _images = new BehaviorSubject<Image[]>([]);
   private readonly _selected = new BehaviorSubject<Image[]>([]);
   private readonly _previewSelection = new BehaviorSubject<Image[]>([]);
@@ -21,16 +21,17 @@ export class MediaService {
   selected$: Observable<Image[]> = this._selected.asObservable();
   previewSelection$: Observable<Image[]> = this._previewSelection.asObservable();
 
-  get path() {
-    if (!this._path) {
-      this._path = !localStorage.getItem('path') ? '/' : localStorage.getItem('path');
+  get path$() {
+    if (!this._path.value) {
+      const newPath = !localStorage.getItem('path') ? '/' : localStorage.getItem('path');
+      this._path.next(newPath);
     }
-    return this._path;
+    return this._path.asObservable();
   }
 
-  set path(path: string) {
+  setPath(path: string) {
     localStorage.setItem('path', path);
-    this._path = path;
+    this._path.next(path);
   }
 
   get selected() {

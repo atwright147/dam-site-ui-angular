@@ -17,13 +17,16 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      path: this.mediaService.path,
+    this.mediaService.path$.subscribe(data => {
+      console.info(data);
+      this.form = this.fb.group({
+        path: data,
+      });
     });
   }
 
   onSubmit() {
     console.info(this.form.value);
-    this.mediaService.path = this.form.get('path').value;
+    this.mediaService.setPath(this.form.get('path').value);
   }
 }

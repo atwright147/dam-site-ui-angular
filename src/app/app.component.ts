@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { MediaService } from './services/media.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -79,7 +81,12 @@ export class AppComponent {
   ];
   options = {};
 
+  constructor(
+    private readonly mediaService: MediaService,
+  ) { }
+
   onEvent(event) {
     console.info(encodeURI(event.node.data.path));
+    this.mediaService.setPath(encodeURI(event.node.data.path));
   }
 }
