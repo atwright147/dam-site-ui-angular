@@ -41,13 +41,15 @@ export class FilmstripComponent implements OnInit, OnDestroy {
 
     this.formChangeSub = this.form.valueChanges.subscribe((val) => {
       const selection = [];
+      const previewSelection = [];
       Object.keys(val).forEach((key: string) => {
         if (val[key]) {
           selection.push(this.images.filter(item => item.id.toString() === key)[0]);
+          previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
         }
       });
       this.mediaService.selected = selection;
-      this.mediaService.previewSelection = selection.splice(0, 6);
+      this.mediaService.previewSelection = previewSelection.splice(0, 6);
     });
   }
 

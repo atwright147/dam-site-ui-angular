@@ -10,6 +10,7 @@ import { FilmstripComponent } from './components/layout/filmstrip/filmstrip.comp
 import { ThumbnailComponent } from './components/thumbnail/thumbnail.component';
 import { PreviewComponent } from './components/preview/preview.component';
 import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { HeaderComponent } from './components/header/header.component';
     ThumbnailComponent,
     PreviewComponent,
     HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     AppRoutingModule,
