@@ -86,7 +86,6 @@ export class AppComponent {
   ) { }
 
   onEvent(event) {
-    console.info(encodeURI(event.node.data.path));
     this.mediaService.setPath(encodeURI(event.node.data.path));
   }
 }
