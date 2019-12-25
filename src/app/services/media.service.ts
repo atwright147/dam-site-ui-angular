@@ -51,7 +51,7 @@ export class MediaService {
   }
 
   fetch() {
-    const params = new HttpParams().set('path', this.path);
+    const params = new HttpParams().set('path', this._path.value);
     return this.http.get('/api/v1/media', { params });
   }
 }
