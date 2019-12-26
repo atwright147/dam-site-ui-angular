@@ -1,3 +1,5 @@
+@import "../../../../colours.scss";
+
 :host {
   display: grid;
   grid-template-rows: 1fr 210px;
@@ -5,12 +7,12 @@
 }
 
 .previews {
-  background-color: darkslateblue;
+  background-color: $mediumGrey;
   overflow: hidden;
 }
 
 .filmstrip {
-  background-color: darksalmon;
+  background-color: $lightGrey;
   overflow-x: scroll;
   white-space: nowrap;
 }

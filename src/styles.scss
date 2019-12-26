@@ -1,7 +1,9 @@
-@import '~angular-tree-component/dist/angular-tree-component.css';
+@import "~angular-tree-component/dist/angular-tree-component.css";
+@import "./colours.scss";
 
 html,
 body {
+  background-color: $darkGrey;
   height: 100%;
   width: 100%;
 }
@@ -17,12 +19,22 @@ body {
 
 html,
 body,
+button,
 input,
 select,
 textarea {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 14px;
-  color: #333;
+  color: $mediumWhite;
+}
+
+button,
+input,
+select,
+textarea {
+  background-color: $lighterGrey;
+  border: 0;
+  border-radius: 3px;
 }
 
 app-root {
@@ -39,20 +51,15 @@ aside {
 
 header,
 footer {
+  grid-column: 1 / span 2;
   padding: .3rem 1rem;
 }
 
+aside,
 header,
-footer {
-  background-color: orange;
-  grid-column: 1 / span 2;
-}
-
-aside {
-  background-color: YellowGreen;
-}
-
+footer,
 main {
-  background-color: PowderBlue;
+  background-color: $lightGrey;
+  margin: 1px;
 }
 
