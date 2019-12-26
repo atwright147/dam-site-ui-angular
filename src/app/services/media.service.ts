@@ -50,6 +50,9 @@ export class MediaService {
     this._previewSelection.next(images);
   }
 
+  /**
+   * Fetches data from `/api/v1/media?path=${path}`
+   */
   fetch() {
     const params = new HttpParams().set('path', this._path.value);
     return this.http.get('/api/v1/media', { params });

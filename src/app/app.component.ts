@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MediaService } from './services/media.service';
 
@@ -7,7 +7,7 @@ import { MediaService } from './services/media.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   nodes = [
     {
       children: [
@@ -84,6 +84,14 @@ export class AppComponent {
   constructor(
     private readonly mediaService: MediaService,
   ) { }
+
+  ngOnInit() {
+    this.mediaService.path$.subscribe(
+      () => {
+        this.mediaService.fetch().subscribe();
+      },
+    );
+  }
 
   onEvent(event) {
     this.mediaService.setPath(encodeURI(event.node.data.path));
