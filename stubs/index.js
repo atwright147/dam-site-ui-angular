@@ -13,20 +13,21 @@ const PORT = 3000;
 
 const mediaModel = require('./generate-media');
 
-app.get('/api/media', (req, res) => {
+app.get('/api/v1/media', (req, res) => {
+  console.info('here');
   res.json(mediaModel);
 });
 
-app.get('/api/media/:id', (req, res) => {
+app.post('/api/v1/media', (req, res) => {
+  res.status(200);
+});
+
+app.get('/api/v1/media/:id', (req, res) => {
   const media = mediaModel.filter(item => item.id === Number(req.params.id));
   res.json(media);
 });
 
-app.post('/api/media', (req, res) => {
-  res.status(200);
-});
-
-app.get('/api/folders', (req, res) => {
+app.get('/api/v1/folders', (req, res) => {
   const _path = path.resolve(__dirname, 'folders');
   console.info(_path);
   const tree = dirTree(_path, { normalizePath: true });
