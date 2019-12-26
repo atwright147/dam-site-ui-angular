@@ -1,8 +1,7 @@
 <div class="ident">DAM Site</div>
 
 <form [formGroup]="form" class="path" (ngSubmit)="onSubmit()">
-  <label for="path"></label>
-  <input type="text" id="path" formControlName="path">
+  <input type="text" id="path" formControlName="path" aria-label="Path to browse">
   <button>Go</button>
 </form>
 
