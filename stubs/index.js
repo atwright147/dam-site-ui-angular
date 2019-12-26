@@ -14,7 +14,6 @@ const PORT = 3000;
 const mediaModel = require('./generate-media');
 
 app.get('/api/v1/media', (req, res) => {
-  console.info('here');
   res.json(mediaModel);
 });
 
@@ -31,7 +30,6 @@ app.get('/api/v1/folders', (req, res) => {
   const _path = path.resolve(__dirname, 'folders');
   console.info(_path);
   const tree = dirTree(_path, { normalizePath: true });
-  // res.json(tree);
   const treeFiltered = removeFiles(tree.children);
   res.json(treeFiltered);
 });
