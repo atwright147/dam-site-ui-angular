@@ -1,6 +1,8 @@
 @import "~angular-tree-component/dist/angular-tree-component.css";
 @import "./colours.scss";
 
+@import "./angular-tree-component-overrides.scss";
+
 html,
 body {
   background-color: $darkGrey;
