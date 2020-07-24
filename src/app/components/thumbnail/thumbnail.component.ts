@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 // https://alligator.io/angular/custom-form-control/
@@ -15,13 +15,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ],
 })
-export class ThumbnailComponent implements ControlValueAccessor {
+export class ThumbnailComponent implements ControlValueAccessor, OnInit {
   @Input() disabled = false;
   @Input() imageUrl: string;
   @Input() imageId: string;
   @Input() index: number;
 
   private value: boolean;
+
+  ngOnInit() {
+    console.dir(this.imageUrl);
+  }
 
   // Function to call when the model changes.
   onChange = (value: boolean) => {

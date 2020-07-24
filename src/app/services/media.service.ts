@@ -51,10 +51,18 @@ export class MediaService {
   }
 
   /**
-   * Fetches data from `/api/v1/media?path=${path}`
+   * Fetches files and folders from `/api/v1/media?path=${path}`
    */
   fetch() {
     const params = new HttpParams().set('path', this._path.value);
-    return this.http.get('/api/v1/media', { params });
+    return this.http.get<[]>('/api/v1/files', { params });
+    // return this.http.get<[]>('/api/files');
+  }
+
+  /**
+   * Fetches all folders from `/api/v1/folders`
+   */
+  fetchFolders() {
+    return this.http.get('/api/v1/folders');
   }
 }

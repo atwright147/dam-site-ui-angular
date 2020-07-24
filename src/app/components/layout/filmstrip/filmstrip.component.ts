@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { MediaService } from '../../../services/media.service';
+import { Image } from '../../../interfaces/image';
 
 @Component({
   selector: 'app-filmstrip',
@@ -14,18 +15,19 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   formChangeSub: Subscription;
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
+  images: Image[] = [];
 
-  images = [
-    { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 2, url: 'https://images.pexels.com/photos/21261/pexels-photo.jpg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 3, url: 'https://images.pexels.com/photos/567973/pexels-photo-567973.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 4, url: 'https://images.pexels.com/photos/776653/pexels-photo-776653.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 5, url: 'https://images.pexels.com/photos/131046/pexels-photo-131046.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 6, url: 'https://images.pexels.com/photos/302515/pexels-photo-302515.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 7, url: 'https://images.pexels.com/photos/301682/pexels-photo-301682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 8, url: 'https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-    { id: 9, url: 'https://images.pexels.com/photos/3345787/pexels-photo-3345787.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  ];
+  // images = [
+  //   { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 2, url: 'https://images.pexels.com/photos/21261/pexels-photo.jpg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 3, url: 'https://images.pexels.com/photos/567973/pexels-photo-567973.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 4, url: 'https://images.pexels.com/photos/776653/pexels-photo-776653.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 5, url: 'https://images.pexels.com/photos/131046/pexels-photo-131046.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 6, url: 'https://images.pexels.com/photos/302515/pexels-photo-302515.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 7, url: 'https://images.pexels.com/photos/301682/pexels-photo-301682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 8, url: 'https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  //   { id: 9, url: 'https://images.pexels.com/photos/3345787/pexels-photo-3345787.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
+  // ];
 
   constructor(
     private readonly fb: FormBuilder,
@@ -33,24 +35,33 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    const controls = {};
-    for (const image of this.images) {
-      controls[image.id] = [{ value: false, disabled: false }];
-    }
-    this.form = this.fb.group(controls);
+    this.mediaService.fetch()
+      .subscribe(
+        (data: Image[]) => {
+          this.images = data;
 
-    this.formChangeSub = this.form.valueChanges.subscribe((val) => {
-      const selection = [];
-      const previewSelection = [];
-      Object.keys(val).forEach((key: string) => {
-        if (val[key]) {
-          selection.push(this.images.filter(item => item.id.toString() === key)[0]);
-          previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
-        }
-      });
-      this.mediaService.selected = selection;
-      this.mediaService.previewSelection = previewSelection.splice(0, 6);
-    });
+          const controls = {};
+          for (const image of data) {
+            controls[image.id] = [{ value: false, disabled: false }];
+          }
+          this.form = this.fb.group(controls);
+          console.info(this.form);
+
+          this.formChangeSub = this.form.valueChanges.subscribe((val) => {
+            const selection = [];
+            const previewSelection = [];
+            Object.keys(val).forEach((key: string) => {
+              if (val[key]) {
+                selection.push(this.images.filter(item => item.id.toString() === key)[0]);
+                previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
+              }
+            });
+            this.mediaService.selected = selection;
+            this.mediaService.previewSelection = previewSelection.splice(0, 6);
+          });
+        },
+        (err) => console.debug(err),
+      );
   }
 
   ngOnDestroy() {
@@ -93,6 +104,12 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     if (group instanceof FormArray) {
       return group.controls;
     }
-    return Object.keys(group.controls);
+
+    try {
+      return Object.keys(group.controls);
+    } catch (err) {
+      console.info(group.controls);
+      console.debug(err);
+    }
   }
 }

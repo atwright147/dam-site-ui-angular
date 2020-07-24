@@ -1,0 +1,15 @@
+.resizable {
+  position: relative;
+
+  &::before {
+    content: "";
+    cursor: col-resize;
+
+    width: 6px;
+
+    position: absolute;
+    top: 0;
+    right: -3px;
+    bottom: 0;
+  }
+}

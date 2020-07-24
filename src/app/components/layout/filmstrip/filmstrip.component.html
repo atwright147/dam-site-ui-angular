@@ -6,7 +6,7 @@
   <app-thumbnail
     *ngFor="let control of getControls(form); let i = index;"
     [formControlName]="control"
-    [imageUrl]="images[i].url"
+    imageUrl="api/files/thumb/1"
     [imageId]="images[i].id"
     [index]="i"
   ></app-thumbnail>
