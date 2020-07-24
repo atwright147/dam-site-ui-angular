@@ -13,8 +13,6 @@ const PORT = 3000;
 
 const mediaModel = require('./generate-media');
 
-app.all('*', (req, res) => console.info(req))
-
 app.get('/api/v1/media', (req, res) => {
   res.json(mediaModel);
 });
