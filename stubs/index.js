@@ -26,6 +26,11 @@ app.get('/api/v1/media/:id', (req, res) => {
   res.json(media);
 });
 
+app.get('/api/v1/thumb/:id', (req, res) => {
+  const media = mediaModel.filter(item => item.id === req.params.id)[0];
+  res.sendFile(path.resolve(path.join('stubs', 'images', `${media.filename}.jpg`)));
+});
+
 app.get('/api/v1/folders', (req, res) => {
   const _path = path.resolve(__dirname, 'folders');
   console.info(_path);
