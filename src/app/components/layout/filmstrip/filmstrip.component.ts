@@ -11,23 +11,11 @@ import { Image } from '../../../interfaces/image';
   styleUrls: ['./filmstrip.component.scss']
 })
 export class FilmstripComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form = this.fb.group({});
   formChangeSub: Subscription;
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
   images: Image[] = [];
-
-  // images = [
-  //   { id: 1, url: 'https://images.pexels.com/photos/758733/pexels-photo-758733.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 2, url: 'https://images.pexels.com/photos/21261/pexels-photo.jpg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 3, url: 'https://images.pexels.com/photos/567973/pexels-photo-567973.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 4, url: 'https://images.pexels.com/photos/776653/pexels-photo-776653.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 5, url: 'https://images.pexels.com/photos/131046/pexels-photo-131046.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 6, url: 'https://images.pexels.com/photos/302515/pexels-photo-302515.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 7, url: 'https://images.pexels.com/photos/301682/pexels-photo-301682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 8, url: 'https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  //   { id: 9, url: 'https://images.pexels.com/photos/3345787/pexels-photo-3345787.jpeg?w=940&h=650&auto=compress&cs=tinysrgb' },
-  // ];
 
   constructor(
     private readonly fb: FormBuilder,
@@ -108,7 +96,6 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     try {
       return Object.keys(group.controls);
     } catch (err) {
-      console.info(group.controls);
       console.debug(err);
     }
   }
