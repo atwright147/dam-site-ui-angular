@@ -11,6 +11,7 @@ import { ThumbnailComponent } from './components/thumbnail/thumbnail.component';
 import { PreviewComponent } from './components/preview/preview.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { GridComponent } from './components/layout/grid/grid.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FooterComponent } from './components/footer/footer.component';
     PreviewComponent,
     HeaderComponent,
     FooterComponent,
+    GridComponent,
   ],
   imports: [
     AppRoutingModule,

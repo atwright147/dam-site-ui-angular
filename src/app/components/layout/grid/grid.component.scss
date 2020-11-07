@@ -1,0 +1,25 @@
+@import "../../../../colours.scss";
+
+.filmstrip {
+  background-color: $lightGrey;
+
+  // for firefox
+  // also for future proofing since this is now the standard
+  scrollbar-color: $lighterGrey $darkGrey;
+
+  // https://css-tricks.com/custom-scrollbars-in-webkit/
+  // https://codepen.io/MathieuRichard/pen/HAgnm
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  // the but you grab and drag to scroll
+  &::-webkit-scrollbar-thumb {
+    background: $lighterGrey;
+  }
+
+  // the bit that the "thumb" is dragged within
+  &::-webkit-scrollbar-track {
+    background: $darkGrey;
+  }
+}

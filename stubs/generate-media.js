@@ -1,6 +1,8 @@
+const fs = require('fs');
 const faker = require('faker');
 
-const quantity = 10;
+const imagesFolder = fs.readdirSync('./stubs/images');
+const quantity = imagesFolder.length;
 
 const cameras = [
   'Canon',
