@@ -23,33 +23,31 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.mediaService.fetch()
-      .subscribe(
-        (data: Image[]) => {
-          this.images = data;
+    this.mediaService.fetch().subscribe(
+      (data: Image[]) => {
+        this.images = data;
 
-          const controls = {};
-          for (const image of data) {
-            controls[image.id] = [{ value: false, disabled: false }];
-          }
-          this.form = this.fb.group(controls);
-          console.info(this.form);
+        const controls = {};
+        for (const image of data) {
+          controls[image.id] = [{ value: false, disabled: false }];
+        }
+        this.form = this.fb.group(controls);
+      },
+      (err) => console.debug(err),
+    );
 
-          this.formChangeSub = this.form.valueChanges.subscribe((val) => {
-            const selection = [];
-            const previewSelection = [];
-            Object.keys(val).forEach((key: string) => {
-              if (val[key]) {
-                selection.push(this.images.filter(item => item.id.toString() === key)[0]);
-                previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
-              }
-            });
-            this.mediaService.selected = selection;
-            this.mediaService.previewSelection = previewSelection.splice(0, 6);
-          });
-        },
-        (err) => console.debug(err),
-      );
+    this.formChangeSub = this.form.valueChanges.subscribe((val) => {
+      const selection = [];
+      const previewSelection = [];
+      Object.keys(val).forEach((key: string) => {
+        if (val[key]) {
+          selection.push(this.images.filter(item => item.id.toString() === key)[0]);
+          previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
+        }
+      });
+      this.mediaService.selected = selection;
+      this.mediaService.previewSelection = previewSelection.splice(0, 6);
+    });
   }
 
   ngOnDestroy() {
