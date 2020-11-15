@@ -13,6 +13,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { GridComponent } from './components/layout/grid/grid.component';
 
+import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll-horizontal.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +24,7 @@ import { GridComponent } from './components/layout/grid/grid.component';
     HeaderComponent,
     FooterComponent,
     GridComponent,
+    ScrollHorizontalDirective,
   ],
   imports: [
     AppRoutingModule,
