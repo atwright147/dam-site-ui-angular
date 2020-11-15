@@ -12,7 +12,9 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { GridComponent } from './components/layout/grid/grid.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
+import { httpInterceptorProviders } from './http-interceptors';
 import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll-horizontal.directive';
 
 @NgModule({
@@ -25,6 +27,7 @@ import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll
     FooterComponent,
     GridComponent,
     ScrollHorizontalDirective,
+    SpinnerComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -34,7 +37,9 @@ import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll
     HttpClientModule,
     TreeModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders,
+  ],
   bootstrap: [
     AppComponent,
   ]
