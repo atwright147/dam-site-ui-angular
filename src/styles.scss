@@ -22,6 +22,7 @@ body {
 html,
 body,
 button,
+.button,
 input,
 select,
 textarea {
@@ -31,12 +32,19 @@ textarea {
 }
 
 button,
+.button,
 input,
 select,
 textarea {
   background-color: $lighterGrey;
   border: 0;
   border-radius: 3px;
+}
+
+a.button {
+  padding: 3px 6px;
+  margin-right: 3px;
+  text-decoration: none;
 }
 
 app-root {
