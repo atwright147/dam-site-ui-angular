@@ -34,20 +34,21 @@ export class FilmstripComponent implements OnInit, OnDestroy {
         this.form = this.fb.group(controls);
       },
       (err) => console.debug(err),
+      () => {
+        this.formChangeSub = this.form.valueChanges.subscribe((val) => {
+          const selection = [];
+          const previewSelection = [];
+          Object.keys(val).forEach((key: string) => {
+            if (val[key]) {
+              selection.push(this.images.filter(item => item.id.toString() === key)[0]);
+              previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
+            }
+          });
+          this.mediaService.selected = selection;
+          this.mediaService.previewSelection = previewSelection.splice(0, 6);
+        });
+      }
     );
-
-    this.formChangeSub = this.form.valueChanges.subscribe((val) => {
-      const selection = [];
-      const previewSelection = [];
-      Object.keys(val).forEach((key: string) => {
-        if (val[key]) {
-          selection.push(this.images.filter(item => item.id.toString() === key)[0]);
-          previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
-        }
-      });
-      this.mediaService.selected = selection;
-      this.mediaService.previewSelection = previewSelection.splice(0, 6);
-    });
   }
 
   ngOnDestroy() {
@@ -62,6 +63,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
 
     const dataIndex = parseInt((event.target as HTMLElement).dataset.index, 10);
 
+    // tslint:disable:no-console
     switch (event.key) {
       case 'ArrowLeft':
         console.info('left');
@@ -84,6 +86,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+    // tslint:enable:no-console
   }
 
   getControls(group: FormGroup) {
