@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { TreeModule } from 'angular-tree-component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,7 +36,6 @@ import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    TreeModule.forRoot(),
   ],
   providers: [
     httpInterceptorProviders,
