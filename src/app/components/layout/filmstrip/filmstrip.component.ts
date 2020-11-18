@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { MediaService } from '../../../services/media.service';
-import { Image } from '../../../interfaces/image';
+import { IMedia, IMediaItem, MediaService } from '../../../services/media.service';
 
 @Component({
   selector: 'app-filmstrip',
@@ -15,7 +14,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   formChangeSub: Subscription;
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
-  images: Image[] = [];
+  images: IMediaItem[] = [];
 
   constructor(
     private readonly fb: FormBuilder,
@@ -24,11 +23,11 @@ export class FilmstripComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.mediaService.fetch().subscribe(
-      (data: Image[]) => {
-        this.images = data;
+      (data) => {
+        this.images = data.media;
 
         const controls = {};
-        for (const image of data) {
+        for (const image of this.images) {
           controls[image.id] = [{ value: false, disabled: false }];
         }
         this.form = this.fb.group(controls);

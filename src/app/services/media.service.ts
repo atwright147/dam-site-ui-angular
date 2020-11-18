@@ -2,24 +2,36 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { Image } from '../interfaces/image';
+export interface IMediaItem {
+  id: string;
+  url: string;
+  filename: string;
+  path: string;
+  camera: string;
+  lens: string;
+}
+
+export interface IMedia {
+  media: IMediaItem[];
+  dates: string[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class MediaService {
   private readonly _path = new BehaviorSubject<string>('');
-  private readonly _images = new BehaviorSubject<Image[]>([]);
-  private readonly _selected = new BehaviorSubject<Image[]>([]);
-  private readonly _previewSelection = new BehaviorSubject<Image[]>([]);
+  private readonly _images = new BehaviorSubject<IMediaItem[]>([]);
+  private readonly _selected = new BehaviorSubject<IMediaItem[]>([]);
+  private readonly _previewSelection = new BehaviorSubject<IMediaItem[]>([]);
 
   constructor(
     private readonly http: HttpClient,
   ) {}
 
-  images$: Observable<Image[]> = this._images.asObservable();
-  selected$: Observable<Image[]> = this._selected.asObservable();
-  previewSelection$: Observable<Image[]> = this._previewSelection.asObservable();
+  images$: Observable<IMediaItem[]> = this._images.asObservable();
+  selected$: Observable<IMediaItem[]> = this._selected.asObservable();
+  previewSelection$: Observable<IMediaItem[]> = this._previewSelection.asObservable();
 
   get path$() {
     if (!this._path.value) {
@@ -38,7 +50,7 @@ export class MediaService {
     return this._selected.value;
   }
 
-  set selected(images: Image[]) {
+  set selected(images: IMediaItem[]) {
     this._selected.next(images);
   }
 
@@ -46,7 +58,7 @@ export class MediaService {
     return this._previewSelection.value;
   }
 
-  set previewSelection(images: Image[]) {
+  set previewSelection(images: IMediaItem[]) {
     this._previewSelection.next(images);
   }
 
@@ -56,7 +68,7 @@ export class MediaService {
   fetch() {
     // const params = new HttpParams().set('path', this._path.value);
     // return this.http.get<[]>('/api/v1/media', { params });
-    return this.http.get<[]>('/api/v1/media');
+    return this.http.get<IMedia>('/api/v1/media');
   }
 
   /**

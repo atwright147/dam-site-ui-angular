@@ -20,12 +20,12 @@ app.post('/api/v1/media', (req, res) => {
 });
 
 app.get('/api/v1/media/:id', (req, res) => {
-  const media = mediaModel.filter(item => item.id === Number(req.params.id));
+  const media = mediaModel.media.filter(item => item.id === Number(req.params.id));
   res.json(media);
 });
 
 app.get('/api/v1/thumb/:id', (req, res) => {
-  const media = mediaModel.filter(item => item.id === req.params.id)[0];
+  const media = mediaModel.media.filter(item => item.id === req.params.id)[0];
   res.sendFile(path.resolve(path.join('stubs', 'images', `${media.filename}.jpg`)));
 });
 
