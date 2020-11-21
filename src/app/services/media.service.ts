@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface IMediaItem {
   id: string;
@@ -24,6 +25,7 @@ export class MediaService {
   private readonly _images = new BehaviorSubject<IMediaItem[]>([]);
   private readonly _selected = new BehaviorSubject<IMediaItem[]>([]);
   private readonly _previewSelection = new BehaviorSubject<IMediaItem[]>([]);
+  private readonly _dates = new BehaviorSubject<string[]>([]);
 
   constructor(
     private readonly http: HttpClient,
@@ -32,6 +34,7 @@ export class MediaService {
   images$: Observable<IMediaItem[]> = this._images.asObservable();
   selected$: Observable<IMediaItem[]> = this._selected.asObservable();
   previewSelection$: Observable<IMediaItem[]> = this._previewSelection.asObservable();
+  dates$: Observable<string[]> = this._dates.asObservable();
 
   get path$() {
     if (!this._path.value) {
@@ -63,12 +66,18 @@ export class MediaService {
   }
 
   /**
-   * Fetches files and folders from `/api/v1/media?path=${path}`
+   * Fetches files and folders from `/api/v1/media`
+   * Use to initiate BehaviorSubjects
    */
   fetch() {
-    // const params = new HttpParams().set('path', this._path.value);
-    // return this.http.get<[]>('/api/v1/media', { params });
-    return this.http.get<IMedia>('/api/v1/media');
+    return this.http
+      .get<IMedia>('/api/v1/media')
+      .pipe(
+        tap((data) => {
+          this._images.next(data.media);
+          this._dates.next(data.dates);
+        }),
+      );
   }
 
   /**

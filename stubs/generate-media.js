@@ -24,7 +24,7 @@ faker.locale = 'en_GB';
 const dates = [];
 for (let index = 0; index < quantityDates; index++) {
   const date = faker.date.between('2018-01-01', Date());
-  dates.push(date);
+  dates.push(date.toISOString().split('T')[0]);
 }
 
 const media = [];

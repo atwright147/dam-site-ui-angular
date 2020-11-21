@@ -22,9 +22,9 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.mediaService.fetch().subscribe(
+    this.mediaService.images$.subscribe(
       (data) => {
-        this.images = data.media;
+        this.images = data;
 
         const controls = {};
         for (const image of this.images) {

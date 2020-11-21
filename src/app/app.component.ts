@@ -13,14 +13,6 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.mediaService.path$.subscribe(
-      () => {
-        this.mediaService.fetch().subscribe();
-      },
-    );
-  }
-
-  onEvent(event) {
-    this.mediaService.setPath(encodeURI(event.node.data.path));
+    this.mediaService.fetch().subscribe();
   }
 }

@@ -17,6 +17,7 @@ import { httpInterceptorProviders } from './http-interceptors';
 import { CustomErrorHandler } from './shared/error-handler/error-handler';
 
 import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll-horizontal.directive';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll
     GridComponent,
     ScrollHorizontalDirective,
     SpinnerComponent,
+    SidebarComponent,
   ],
   imports: [
     AppRoutingModule,
