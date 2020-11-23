@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "dev": "npm start",
-    "stubs": "nodemon --delay 1500ms --exec node ./stubs/index.js",
+    "stubs": "node ./stubs/index.js",
     "dev:stubs": "npm start & npm run stubs",
     "typecheck": "tsc --noEmit"
   },

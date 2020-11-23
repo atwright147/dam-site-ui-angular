@@ -24,7 +24,7 @@ faker.locale = 'en_GB';
 const dates = [];
 for (let index = 0; index < quantityDates; index++) {
   const date = faker.date.between('2018-01-01', Date());
-  dates.push(date.toISOString().split('T')[0]);
+  dates.push(date);
 }
 
 const media = [];
@@ -33,13 +33,19 @@ for (let index = 0; index < quantity; index++) {
 
   const words = faker.lorem.words();
   const path = `/${words.split(' ').join('/')}/`;
+  const fullDate = getDate(index, dates);
+  const date = fullDate.toISOString().split('T')[0];
+  const year = fullDate.getFullYear();
+  const month = fullDate.getMonth();
 
+  // tslint:disable: no-string-literal
   model['id'] = faker.random.uuid();
   model['filename'] = `image-${index + 1}`;
   model['path'] = path;
   model['camera'] = cameras[faker.random.number({ max: 2 })];
   model['lens'] = lenses[faker.random.number({ max: 2 })];
-  model['date'] = getDate(index, dates);
+  model['datetime'] = { date, year, month };
+  // tslint:enable: no-string-literal
 
   media.push(model);
 }
