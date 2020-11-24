@@ -21,11 +21,20 @@ const lenses = [
 faker.seed(1234567);
 faker.locale = 'en_GB';
 
-const dates = [];
+const fullDatesList = [];
 for (let index = 0; index < quantityDates; index++) {
   const date = faker.date.between('2018-01-01', Date());
-  dates.push(date);
+  fullDatesList.push(date);
 }
+
+const dates = fullDatesList.sort().map(item => {
+  const parsedDate = new Date(item);
+  const date = parsedDate.toISOString().split('T')[0];
+  const year = parsedDate.getFullYear();
+  const month = parsedDate.getMonth() + 1;
+
+  return { date, year, month };
+});
 
 const media = [];
 for (let index = 0; index < quantity; index++) {
@@ -33,10 +42,10 @@ for (let index = 0; index < quantity; index++) {
 
   const words = faker.lorem.words();
   const path = `/${words.split(' ').join('/')}/`;
-  const fullDate = getDate(index, dates);
+  const fullDate = getDate(index, fullDatesList);
   const date = fullDate.toISOString().split('T')[0];
   const year = fullDate.getFullYear();
-  const month = fullDate.getMonth();
+  const month = fullDate.getMonth() + 1;
 
   // tslint:disable: no-string-literal
   model['id'] = faker.random.uuid();
