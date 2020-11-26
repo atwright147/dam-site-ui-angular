@@ -33,7 +33,15 @@ const dates = fullDatesList.sort().map(item => {
   const year = parsedDate.getFullYear();
   const month = parsedDate.getMonth() + 1;
 
-  return { date, year, month };
+  const quantityMonths = faker.random.number({ 'min': 1, 'max': 4 });
+  const children = [];
+  for (let index = 0; index < quantityMonths; index++) {
+    const monthIndex = faker.random.number({ 'min': 0, 'max': 11 });
+    const dateObj = new Date(year, monthIndex);
+    children.push({ monthName: dateObj.toLocaleString('default', { month: 'long' }), monthIndex });
+  }
+
+  return { date, year, month, children };
 });
 
 const media = [];
