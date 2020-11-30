@@ -4,6 +4,7 @@ export class CustomErrorHandler implements ErrorHandler {
   constructor() { }
 
   handleError(err): void {
-    console.info('Cor blimey, an error occurred');
+    console.info('Custom ErrorHandler caught an error');
+    console.info(err);
   }
 }
