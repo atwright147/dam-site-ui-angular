@@ -1,5 +1,7 @@
+// @ts-check
 const fs = require('fs');
 const faker = require('faker');
+
 const { getDate } = require('./utils/get-date');
 
 const imagesFolder = fs.readdirSync('./stubs/images');
@@ -29,9 +31,7 @@ for (let index = 0; index < quantityDates; index++) {
 
 const dates = fullDatesList.sort().map(item => {
   const parsedDate = new Date(item);
-  const date = parsedDate.toISOString().split('T')[0];
   const year = parsedDate.getFullYear();
-  const month = parsedDate.getMonth() + 1;
 
   const quantityMonths = faker.random.number({ 'min': 1, 'max': 4 });
   const children = [];
@@ -41,7 +41,7 @@ const dates = fullDatesList.sort().map(item => {
     children.push({ year, monthName: dateObj.toLocaleString('default', { month: 'long' }), monthIndex });
   }
 
-  return { date, year, month, children };
+  return { year, children };
 });
 
 const media = [];
