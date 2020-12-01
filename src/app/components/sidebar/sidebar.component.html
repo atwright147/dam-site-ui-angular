@@ -1,3 +1,5 @@
-<ul>
-  <li *ngFor="let date of dates">{{date}}</li>
-</ul>
+<accordion>
+  <panel *ngFor="let date of dates" [title]="date.year" #panel [open]="panel.open" (toggle)="panel.open = !panel.open">
+    <p *ngFor="let child of date.children">{{child.monthName}}</p>
+  </panel>
+</accordion>

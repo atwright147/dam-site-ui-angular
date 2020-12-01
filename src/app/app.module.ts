@@ -18,6 +18,8 @@ import { CustomErrorHandler } from './shared/error-handler/error-handler';
 
 import { ScrollHorizontalDirective } from './directives/scroll-horizontal/scroll-horizontal.directive';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AccordionComponent } from './components/accordion/accordion.component';
+import { PanelComponent } from './components/panel/panel.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     ScrollHorizontalDirective,
     SpinnerComponent,
     SidebarComponent,
+    AccordionComponent,
+    PanelComponent,
   ],
   imports: [
     AppRoutingModule,
