@@ -5,7 +5,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'panel.component.html',
 })
 export class PanelComponent {
-  @Input() open = false;
+  @Input() isOpen = false;
   @Input() title: string;
   @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
 }

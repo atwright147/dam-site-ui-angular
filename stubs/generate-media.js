@@ -41,7 +41,7 @@ const dates = fullDatesList.sort().map(item => {
     children.push({ year, monthName: dateObj.toLocaleString('default', { month: 'long' }), monthIndex });
   }
 
-  return { year, children };
+  return { year, isOpen: false, children };
 });
 
 const media = [];

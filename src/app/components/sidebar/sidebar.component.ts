@@ -19,4 +19,8 @@ export class SidebarComponent implements OnInit {
       (data) => this.dates = data,
     );
   }
+
+  setFilter(...args) {
+    console.info(args);
+  }
 }
