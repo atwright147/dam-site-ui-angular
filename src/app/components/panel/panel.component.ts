@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'panel',
-  templateUrl: 'panel.component.html',
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent {
   @Input() isOpen = false;

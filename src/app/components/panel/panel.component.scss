@@ -1,0 +1,18 @@
+.open .panel-heading {
+  font-weight: bold;
+}
+
+.panel-heading {
+  cursor: pointer;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.panel-body {
+  padding-left: 20px;
+}
+
+:host ::ng-deep p {
+  cursor: pointer;
+  margin: 5px 0;
+}

@@ -1,4 +1,4 @@
-<div class="panel panel-info">
+<div class="panel panel-info" [class.open]="isOpen">
   <div class="panel-heading" (click)="toggle.emit()">
     {{title}}
   </div>

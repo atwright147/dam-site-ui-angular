@@ -1,15 +1,25 @@
-import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, AfterContentChecked, Input } from '@angular/core';
 import { PanelComponent } from '../panel/panel.component';
 
 @Component({
   selector: 'accordion',
   template: '<ng-content></ng-content>'
 })
-export class AccordionComponent implements AfterContentInit {
+export class AccordionComponent implements AfterContentChecked {
+  @Input() initOpenFirst = false;
   @ContentChildren(PanelComponent) panels: QueryList<PanelComponent>;
+  firstWasSet = false;
 
-  ngAfterContentInit() {
-    setTimeout(() => this.panels.toArray()[0].isOpen = true);
+  ngAfterContentChecked() {
+    if (this.initOpenFirst) {
+      if (this.panels.length) {
+        this.firstWasSet = true;
+      }
+
+      if (!this.firstWasSet) {
+        setTimeout(() => this.panels.first.isOpen = true);
+      }
+    }
 
     this.panels.toArray().forEach((panel: PanelComponent) => {
       panel.toggle.subscribe(
