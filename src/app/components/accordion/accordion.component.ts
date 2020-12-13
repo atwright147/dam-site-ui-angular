@@ -33,7 +33,11 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
   }
 
   openPanel(panel: PanelComponent) {
-    this.panels.toArray().forEach(p => p.isOpen = false);
-    panel.isOpen = true;
+    this.panels.toArray().forEach(p => {
+      if (p !== panel) {
+        p.isOpen = false;
+      }
+    });
+    panel.isOpen = !panel.isOpen;
   }
 }
