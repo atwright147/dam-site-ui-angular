@@ -3,7 +3,8 @@ import { PanelComponent } from '../panel/panel.component';
 
 @Component({
   selector: 'accordion',
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionComponent implements AfterContentChecked {
   @Input() initOpenFirst = false;
