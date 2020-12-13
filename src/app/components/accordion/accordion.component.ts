@@ -1,4 +1,5 @@
-import { Component, ContentChildren, QueryList, AfterContentChecked, Input } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PanelComponent } from '../panel/panel.component';
 
 @Component({
@@ -6,27 +7,30 @@ import { PanelComponent } from '../panel/panel.component';
   template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccordionComponent implements AfterContentChecked {
+export class AccordionComponent implements OnDestroy, AfterContentInit {
   @Input() initOpenFirst = false;
   @ContentChildren(PanelComponent) panels: QueryList<PanelComponent>;
-  firstWasSet = false;
+  hasPanelRefs = true;
+  subscriptions: Subscription[] = [];
 
-  ngAfterContentChecked() {
-    if (this.initOpenFirst) {
-      if (this.panels.length) {
-        this.firstWasSet = true;
+  ngAfterContentInit() {
+
+    setTimeout(() => {
+      this.panels.toArray().forEach((panel: PanelComponent) => {
+        const sub = panel.toggle.subscribe(
+          () => this.openPanel(panel),
+        );
+        this.subscriptions.push(sub);
+      });
+
+      if (this.initOpenFirst) {
+        this.panels.first.isOpen = true;
       }
-
-      if (!this.firstWasSet) {
-        setTimeout(() => this.panels.first.isOpen = true);
-      }
-    }
-
-    this.panels.toArray().forEach((panel: PanelComponent) => {
-      panel.toggle.subscribe(
-        () => this.openPanel(panel),
-      );
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.map(sub => sub.unsubscribe());
   }
 
   openPanel(panel: PanelComponent) {
