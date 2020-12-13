@@ -14,7 +14,6 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
   subscriptions: Subscription[] = [];
 
   ngAfterContentInit() {
-
     setTimeout(() => {
       this.panels.toArray().forEach((panel: PanelComponent) => {
         const sub = panel.toggle.subscribe(
@@ -30,7 +29,7 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
   }
 
   ngOnDestroy() {
-    this.subscriptions.map(sub => sub.unsubscribe());
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   openPanel(panel: PanelComponent) {
