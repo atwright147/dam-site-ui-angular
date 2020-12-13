@@ -1,5 +1,6 @@
 import { Component, ContentChildren, QueryList, Input, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { PanelComponent } from '../panel/panel.component';
 
 @Component({
