@@ -21,8 +21,7 @@ export class ThumbnailComponent implements ControlValueAccessor {
   @Input() imageUrl: string;
   @Input() imageId: string;
   @Input() index: number;
-
-  value: boolean;
+  @Input() value: boolean;
 
   // Function to call when the model changes.
   onChange = (value: boolean) => {

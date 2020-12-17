@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { IMedia, IMediaItem, MediaService } from '../../../services/media.service';
@@ -16,6 +16,20 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   previewSelection$ = this.mediaService.previewSelection$;
   images: IMediaItem[] = [];
 
+  //#region KeyValuePipe sorting functions
+  originalOrder = (a, b): number => {
+    return 0;
+  }
+
+  valueAscOrder = (a, b): number => {
+    return a.value.localeCompare(b.value);
+  }
+
+  keyDescOrder = (a, b): number => {
+    return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+  }
+  //#endregion
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly mediaService: MediaService,
@@ -26,11 +40,14 @@ export class FilmstripComponent implements OnInit, OnDestroy {
       (data) => {
         this.images = data;
 
-        const controls = {};
-        for (const image of this.images) {
-          controls[image.id] = [{ value: false, disabled: false }];
-        }
-        this.form = this.fb.group(controls);
+        this.form = this.fb.group({
+          checkboxes: this.fb.group({}),
+        });
+
+        const checkboxes = this.form.get('checkboxes') as FormGroup;
+        this.images?.forEach((item: IMediaItem) => {
+          checkboxes.addControl(item.id, new FormControl(false));
+        });
       },
       (err) => console.debug(err),
       () => {
@@ -96,7 +113,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     try {
       return Object.keys(group.controls);
     } catch (err) {
-      console.debug(err);
+      console.error(err);
     }
   }
 }
