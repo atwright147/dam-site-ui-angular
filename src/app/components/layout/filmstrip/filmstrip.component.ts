@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { IMedia, IMediaItem, MediaService } from '../../../services/media.service';
+import { IMediaItem, MediaService } from '../../../services/media.service';
 
 @Component({
   selector: 'app-filmstrip',
@@ -11,7 +11,7 @@ import { IMedia, IMediaItem, MediaService } from '../../../services/media.servic
 })
 export class FilmstripComponent implements OnInit, OnDestroy {
   form = this.fb.group({});
-  formChangeSub: Subscription;
+  subs: Subscription[] = [];
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
   images: IMediaItem[] = [];
@@ -36,7 +36,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.mediaService.images$.subscribe(
+    const imagesSub = this.mediaService.images$.subscribe(
       (data) => {
         this.images = data;
 
@@ -48,27 +48,34 @@ export class FilmstripComponent implements OnInit, OnDestroy {
         this.images?.forEach((item: IMediaItem) => {
           checkboxes.addControl(item.id, new FormControl(false));
         });
+
+        const formChangesSub = this.form.valueChanges.subscribe(
+          (val) => {
+            const selection = [];
+            const previewSelection = [];
+
+            Object.keys(val.checkboxes).forEach((key: string) => {
+              if (val.checkboxes[key]) {
+                selection.push(this.images.filter(item => item.id.toString() === key)[0]);
+                previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
+              }
+            });
+
+            this.mediaService.selected = selection;
+            this.mediaService.previewSelection = previewSelection.splice(0, 6);
+          },
+          console.debug,
+        );
+        this.subs.push(formChangesSub);
       },
-      (err) => console.debug(err),
-      () => {
-        this.formChangeSub = this.form.valueChanges.subscribe((val) => {
-          const selection = [];
-          const previewSelection = [];
-          Object.keys(val).forEach((key: string) => {
-            if (val[key]) {
-              selection.push(this.images.filter(item => item.id.toString() === key)[0]);
-              previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
-            }
-          });
-          this.mediaService.selected = selection;
-          this.mediaService.previewSelection = previewSelection.splice(0, 6);
-        });
-      }
+      console.debug,
     );
+
+    this.subs.push(imagesSub);
   }
 
   ngOnDestroy() {
-    this.formChangeSub.unsubscribe();
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   @HostListener('document:keyup', ['$event']) moveFocus(event: KeyboardEvent) {
