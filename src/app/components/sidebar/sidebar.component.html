@@ -1,5 +1,5 @@
 <app-accordion>
-  <app-panel *ngFor="let date of dates" [title]="date.year">
+  <app-panel *ngFor="let date of dates" [title]="date.year" (click)="setFilter(date.year, null)">
     <p *ngFor="let child of date.children" (click)="setFilter(child.year, child.monthIndex)">{{child.monthName}}</p>
   </app-panel>
 </app-accordion>
