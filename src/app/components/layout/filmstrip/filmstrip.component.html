@@ -3,7 +3,7 @@
 </div>
 
 <form [formGroup]="form" class="filmstrip" appScrollHorizontal>
-  <div formGroupName="checkboxes">
+  <div formGroupName="checkboxes" appMultiCheck="checkboxes">
     <app-thumbnail
       *ngFor="let control of form.get('checkboxes').value | keyvalue:originalOrder; let i = index;"
       [formControlName]="control.key"
