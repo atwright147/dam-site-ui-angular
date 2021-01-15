@@ -1,19 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
-export interface IMediaItem {
-  id: string;
-  url: string;
-  filename: string;
-  path: string;
-  camera: string;
-  lens: string;
-}
+import { IFile } from '../interfaces/files.interface';
 
 export interface IMedia {
-  media: IMediaItem[];
+  media: IFile[];
   dates: string[];
 }
 
@@ -22,18 +14,18 @@ export interface IMedia {
 })
 export class MediaService {
   private readonly _path = new BehaviorSubject<string>('');
-  private readonly _images = new BehaviorSubject<IMediaItem[]>([]);
-  private readonly _selected = new BehaviorSubject<IMediaItem[]>([]);
-  private readonly _previewSelection = new BehaviorSubject<IMediaItem[]>([]);
+  private readonly _images = new BehaviorSubject<IFile[]>([]);
+  private readonly _selected = new BehaviorSubject<IFile[]>([]);
+  private readonly _previewSelection = new BehaviorSubject<IFile[]>([]);
   private readonly _dates = new BehaviorSubject<string[]>([]);
 
   constructor(
     private readonly http: HttpClient,
   ) {}
 
-  images$: Observable<IMediaItem[]> = this._images.asObservable();
-  selected$: Observable<IMediaItem[]> = this._selected.asObservable();
-  previewSelection$: Observable<IMediaItem[]> = this._previewSelection.asObservable();
+  images$: Observable<IFile[]> = this._images.asObservable();
+  selected$: Observable<IFile[]> = this._selected.asObservable();
+  previewSelection$: Observable<IFile[]> = this._previewSelection.asObservable();
   dates$: Observable<string[]> = this._dates.asObservable();
 
   get path$() {
@@ -53,7 +45,7 @@ export class MediaService {
     return this._selected.value;
   }
 
-  set selected(images: IMediaItem[]) {
+  set selected(images: IFile[]) {
     this._selected.next(images);
   }
 
@@ -61,17 +53,17 @@ export class MediaService {
     return this._previewSelection.value;
   }
 
-  set previewSelection(images: IMediaItem[]) {
+  set previewSelection(images: IFile[]) {
     this._previewSelection.next(images);
   }
 
   /**
-   * Fetches files and folders from `/api/v1/media`
+   * Fetches files and folders from `/api/v1/photos`
    * Use to initiate BehaviorSubjects
    */
   fetch() {
     return this.http
-      .get<IMedia>('/api/v1/media')
+      .get<IMedia>('/api/v1/photos')
       .pipe(
         tap((data) => {
           this._images.next(data.media);

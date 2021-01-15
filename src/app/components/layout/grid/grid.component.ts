@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { IMediaItem, MediaService } from '../../../services/media.service';
+import { IFile } from '../../../interfaces/files.interface';
+import { MediaService } from '../../../services/media.service';
 
 @Component({
   selector: 'app-grid',
@@ -14,7 +15,7 @@ export class GridComponent implements OnInit, OnDestroy {
   formChangeSub: Subscription;
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
-  images: IMediaItem[] = [];
+  images: IFile[] = [];
 
   constructor(
     private readonly fb: FormBuilder,

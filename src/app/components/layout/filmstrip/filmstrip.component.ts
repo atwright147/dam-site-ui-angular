@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { IMediaItem, MediaService } from '../../../services/media.service';
+import { IFile } from '../../../interfaces/files.interface';
+import { MediaService } from '../../../services/media.service';
 
 @Component({
   selector: 'app-filmstrip',
@@ -14,7 +15,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
-  images: IMediaItem[] = [];
+  images: IFile[] = [];
 
   //#region KeyValuePipe sorting functions
   originalOrder = (a, b): number => {
@@ -45,8 +46,8 @@ export class FilmstripComponent implements OnInit, OnDestroy {
         });
 
         const checkboxes = this.form.get('checkboxes') as FormGroup;
-        this.images?.forEach((item: IMediaItem) => {
-          checkboxes.addControl(item.id, new FormControl(false));
+        this.images?.forEach((item: IFile) => {
+          checkboxes.addControl(`${item.id}`, new FormControl(false));
         });
 
         const formChangesSub = this.form.valueChanges.subscribe(
