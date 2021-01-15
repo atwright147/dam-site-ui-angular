@@ -11,15 +11,15 @@ const PORT = 3000;
 
 const mediaModel = require('./generate-media');
 
-app.get('/api/v1/media', (req, res) => {
+app.get('/api/v1/photos', (req, res) => {
   res.json(mediaModel);
 });
 
-app.post('/api/v1/media', (req, res) => {
+app.post('/api/v1/photos', (req, res) => {
   res.status(200);
 });
 
-app.get('/api/v1/media/:id', (req, res) => {
+app.get('/api/v1/photos/:id', (req, res) => {
   const media = mediaModel.media.filter(item => item.id === Number(req.params.id));
   res.json(media);
 });
