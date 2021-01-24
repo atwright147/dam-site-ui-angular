@@ -34,14 +34,14 @@ const dates = fullDatesList.sort().map(item => {
   const year = parsedDate.getFullYear();
 
   const quantityMonths = faker.random.number({ 'min': 1, 'max': 4 });
-  const children = [];
+  const months = [];
   for (let index = 0; index < quantityMonths; index++) {
     const monthIndex = faker.random.number({ 'min': 0, 'max': 11 });
     const dateObj = new Date(year, monthIndex);
-    children.push({ year, monthName: dateObj.toLocaleString('default', { month: 'long' }), monthIndex });
+    months.push({ year, monthName: dateObj.toLocaleString('default', { month: 'long' }), monthIndex });
   }
 
-  return { year, isOpen: false, children };
+  return { year, isOpen: false, months };
 });
 
 const media = [];
