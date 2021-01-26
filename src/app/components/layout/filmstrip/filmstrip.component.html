@@ -8,8 +8,8 @@
       *ngFor="let control of form.get('checkboxes').value | keyvalue:originalOrder; let i = index;"
       [formControlName]="control.key"
       [value]="control.value"
-      imageUrl="/api/v1/thumb/{{images[i].id}}"
-      [imageId]="images[i].id"
+      imageUrl="/api/v1/thumb/{{control.key}}"
+      [imageId]="control.key"
       [index]="i"
     ></app-thumbnail>
   </div>
