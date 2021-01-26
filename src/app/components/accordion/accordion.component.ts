@@ -26,7 +26,7 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
       if (this.initOpenFirst) {
         this.panels.first.isOpen = true;
       }
-    });
+    }, 250);
   }
 
   ngOnDestroy() {
