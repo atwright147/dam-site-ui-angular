@@ -10,6 +10,6 @@
 />
 <label for="image-{{imageId}}" [class.disabled]="disabled">
   <figure>
-    <div class="thumb" [ngStyle]="{'background-image': 'url(&quot;' + imageUrl + '&quot;)'}"></div>
+    <div class="thumb" [ngStyle]="{'background-image': 'url(&quot;' + imageUrl + '&quot;)'}" [ngClass]="orientationClassName"></div>
   </figure>
 </label>

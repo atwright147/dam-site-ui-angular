@@ -22,6 +22,14 @@ export class ThumbnailComponent implements ControlValueAccessor {
   @Input() imageId: string;
   @Input() index: number;
   @Input() value: boolean;
+  orientationClassName = '';
+  @Input()
+  set orientation(value: string) {
+    console.info(value);
+    this.orientationClassName = `exif-orientation-${value}`;
+  }
+
+
 
   // Function to call when the model changes.
   onChange = (value: boolean) => {

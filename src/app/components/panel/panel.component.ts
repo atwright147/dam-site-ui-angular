@@ -9,4 +9,5 @@ export class PanelComponent {
   @Input() isOpen = false;
   @Input() title: string;
   @Output() toggle: EventEmitter<PanelComponent> = new EventEmitter<PanelComponent>();
+  @Output() filter: EventEmitter<string> = new EventEmitter<string>();
 }
