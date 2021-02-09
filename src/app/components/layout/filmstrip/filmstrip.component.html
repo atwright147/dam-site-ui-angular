@@ -11,7 +11,7 @@
       imageUrl="/api/v1/thumb/{{control.key}}"
       [imageId]="control.key"
       [index]="i"
-      [orientation]="images[control.key].Orientation"
+      [orientation]="(orientations$ | async)[control.key]"
     ></app-thumbnail>
   </div>
 </form>

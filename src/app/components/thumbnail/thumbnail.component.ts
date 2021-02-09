@@ -23,11 +23,11 @@ export class ThumbnailComponent implements ControlValueAccessor {
   @Input() index: number;
   @Input() value: boolean;
   orientationClassName = '';
-  @Input()
-  set orientation(value: string) {
-    console.info(value);
-    this.orientationClassName = `exif-orientation-${value}`;
-  }
+  @Input() orientation: string;
+  // set orientation(value: string) {
+  //   console.info(value);
+  //   this.orientationClassName = `exif-orientation-${value}`;
+  // }
 
 
 

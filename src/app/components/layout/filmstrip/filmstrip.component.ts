@@ -15,6 +15,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
+  orientations$ = this.mediaService.orientations$;
   images: IFile[] = [];
 
   //#region KeyValuePipe sorting functions
@@ -37,9 +38,11 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+
     const imagesSub = this.mediaService.images$.subscribe(
       (data) => {
         this.images = data;
+        console.info(this.images);
 
         this.form = this.fb.group({
           checkboxes: this.fb.group({}),
