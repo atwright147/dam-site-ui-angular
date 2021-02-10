@@ -16,7 +16,7 @@ export class MediaService {
   orientations: Record<string, string>[] = [];
   private readonly _path = new BehaviorSubject<string>('');
   private readonly _images = new BehaviorSubject<IFile[]>([]);
-  private readonly _orientations = new BehaviorSubject<Record<string, string>[]>([]);
+  private readonly _orientations = new BehaviorSubject<Record<string, string>>({});
   private readonly _selected = new BehaviorSubject<IFile[]>([]);
   private readonly _previewSelection = new BehaviorSubject<IFile[]>([]);
   private readonly _dates = new BehaviorSubject<string[]>([]);
@@ -26,7 +26,7 @@ export class MediaService {
   ) {}
 
   images$: Observable<IFile[]> = this._images.asObservable();
-  orientations$: Observable<Record<string, string>[]> = this._orientations.asObservable();
+  orientations$: Observable<Record<string, string>> = this._orientations.asObservable();
   selected$: Observable<IFile[]> = this._selected.asObservable();
   previewSelection$: Observable<IFile[]> = this._previewSelection.asObservable();
   dates$: Observable<string[]> = this._dates.asObservable();
@@ -83,11 +83,11 @@ export class MediaService {
     return this.http.get('/api/v1/folders');
   }
 
-  getOrientation(images: IFile[]): Record<string, string>[] {
-    return images.map(image => {
-      const imageOrientation = {};
-      imageOrientation[image.id] = image.Orientation ?? '0';
-      return imageOrientation;
+  getOrientation(images: IFile[]): Record<string, string> {
+    const imageOrientations: Record<string, string> = {};
+    images.forEach(image => {
+      imageOrientations[image.id] = image.Orientation ?? '0';
     });
+    return imageOrientations;
   }
 }
