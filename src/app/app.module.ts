@@ -21,6 +21,7 @@ import { MultiCheckDirective } from './directives/multicheck/multi-check.directi
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { PanelComponent } from './components/panel/panel.component';
+import { TrueOrNullPipe } from './pipes/true-or-null/true-or-null.pipe';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { PanelComponent } from './components/panel/panel.component';
     SidebarComponent,
     AccordionComponent,
     PanelComponent,
+    TrueOrNullPipe,
   ],
   imports: [
     AppRoutingModule,

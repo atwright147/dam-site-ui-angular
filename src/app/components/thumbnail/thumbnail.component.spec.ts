@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { ThumbnailComponent } from './thumbnail.component';
+import { TrueOrNullPipe } from '../../pipes/true-or-null/true-or-null.pipe';
 
 describe('ThumbnailComponent', () => {
   let component: ThumbnailComponent;
@@ -8,7 +10,13 @@ describe('ThumbnailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThumbnailComponent ]
+      declarations: [
+        ThumbnailComponent,
+        TrueOrNullPipe,
+      ],
+      providers: [
+        FormBuilder,
+      ],
     })
     .compileComponents();
   }));

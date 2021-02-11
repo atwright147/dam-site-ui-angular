@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 import { FilmstripComponent } from './filmstrip.component';
 
@@ -8,7 +10,14 @@ describe('FilmstripComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilmstripComponent ]
+      declarations: [ FilmstripComponent ],
+      imports: [
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+      ],
+      providers: [
+        FormBuilder,
+      ],
     })
     .compileComponents();
   }));

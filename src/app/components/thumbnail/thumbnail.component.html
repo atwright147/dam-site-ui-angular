@@ -4,8 +4,8 @@
   name="image-{{imageId}}"
   [attr.data-index]="index"
   (change)="onTouched(); toggle();"
-  [attr.checked]="value ? true : null"
-  [attr.disabled]="disabled ? true : null"
+  [attr.checked]="value | trueOrNull"
+  [attr.disabled]="disabled | trueOrNull"
   [value]="value"
 />
 <label for="image-{{imageId}}" [class.disabled]="disabled">
