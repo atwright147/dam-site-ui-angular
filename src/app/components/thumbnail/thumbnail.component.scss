@@ -50,36 +50,3 @@ input[type="checkbox"] {
 .disabled {
   opacity: 0.25;
 }
-
-.exif {
-  // from: https://github.com/demimonde/exif2css
-  &-orientation {
-    &-2 {
-      transform: rotate(180deg);
-    }
-
-    &-3 {
-      transform: rotate(180deg);
-    }
-
-    &-4 {
-      transform: rotate(180deg) rotateY(180deg);
-    }
-
-    &-5 {
-      transform: rotate(270deg) rotateY(180deg);
-    }
-
-    &-6 {
-      transform: translateY(-100%) rotate(90deg);
-    }
-
-    &-7 {
-      transform: translateY(-100%) translateX(-100%) rotate(90deg) rotateY(180deg);
-    }
-
-    &-8 {
-      transform: translateX(-100%) rotate(270deg);
-    }
-  }
-}
