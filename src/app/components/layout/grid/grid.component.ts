@@ -13,24 +13,40 @@ import { MediaService } from '../../../services/media.service';
 export class GridComponent implements OnInit, OnDestroy {
   form = this.fb.group({});
   subs: Subscription[] = [];
-  formChangeSub: Subscription;
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
+  orientations$ = this.mediaService.orientations$;
   images: IFile[] = [];
+
+  //#region KeyValuePipe sorting functions
+  originalOrder = (a, b): number => {
+    return 0;
+  }
+
+  valueAscOrder = (a, b): number => {
+    return a.value.localeCompare(b.value);
+  }
+
+  keyDescOrder = (a, b): number => {
+    return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+  }
+  //#endregion
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly mediaService: MediaService,
-  ) { }
+  ) {
+    // fixes issue where form was rendering before initiated
+    // see: https://github.com/KillerCodeMonkey/ngx-quill/issues/187#issuecomment-695796458
+    this.form = this.fb.group({
+      checkboxes: this.fb.group({}),
+    });
+  }
 
   ngOnInit() {
     const imagesSub = this.mediaService.images$.subscribe(
       (data) => {
         this.images = data;
-
-        this.form = this.fb.group({
-          checkboxes: this.fb.group({}),
-        });
 
         const checkboxes = this.form.get('checkboxes') as FormGroup;
         this.images?.forEach((item: IFile) => {
@@ -63,7 +79,7 @@ export class GridComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.formChangeSub.unsubscribe();
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   @HostListener('document:keyup', ['$event']) moveFocus(event: KeyboardEvent) {
@@ -74,6 +90,7 @@ export class GridComponent implements OnInit, OnDestroy {
 
     const dataIndex = parseInt((event.target as HTMLElement).dataset.index, 10);
 
+    // tslint:disable:no-console
     switch (event.key) {
       case 'ArrowLeft':
         console.info('left');
@@ -96,6 +113,7 @@ export class GridComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+    // tslint:enable:no-console
   }
 
   getControls(group: FormGroup) {

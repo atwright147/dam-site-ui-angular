@@ -35,16 +35,18 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   constructor(
     private readonly fb: FormBuilder,
     private readonly mediaService: MediaService,
-  ) { }
+  ) {
+    // fixes issue where form was rendering before initiated
+    // see: https://github.com/KillerCodeMonkey/ngx-quill/issues/187#issuecomment-695796458
+    this.form = this.fb.group({
+      checkboxes: this.fb.group({}),
+    });
+  }
 
   ngOnInit() {
     const imagesSub = this.mediaService.images$.subscribe(
       (data) => {
         this.images = data;
-
-        this.form = this.fb.group({
-          checkboxes: this.fb.group({}),
-        });
 
         const checkboxes = this.form.get('checkboxes') as FormGroup;
         this.images?.forEach((item: IFile) => {
@@ -122,7 +124,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     try {
       return Object.keys(group.controls);
     } catch (err) {
-      console.error(err);
+      console.debug(err);
     }
   }
 }
