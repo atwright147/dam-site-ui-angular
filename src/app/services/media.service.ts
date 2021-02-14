@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IFile } from '../interfaces/files.interface';
 
 export interface IMedia {
+  quantity: number;
   media: IFile[];
+}
+
+export interface IDates {
+  quantity: number;
   dates: string[];
+}
+
+export interface IFilter {
+  year: string;
+  month: number | null;
 }
 
 @Injectable({
@@ -64,14 +74,35 @@ export class MediaService {
    * Fetches files and folders from `/api/v1/photos`
    * Use to initiate BehaviorSubjects
    */
-  fetch() {
+  fetchDates() {
     return this.http
-      .get<IMedia>('/api/v1/photos')
+      .get<IDates>('/api/v1/dates')
+      .pipe(
+        tap((data) => {
+          this._dates.next(data.dates);
+        }),
+      );
+  }
+
+  /**
+   * Fetches files and folders from `/api/v1/photos`
+   * Use to initiate BehaviorSubjects
+   */
+  fetchMedia(filter: IFilter) {
+    const params = new HttpParams()
+      .set('year', filter.year);
+
+    if (filter.month) {
+      console.info('here');
+      params.set('month', String(filter.month));
+    }
+
+    return this.http
+      .get<IMedia>('/api/v1/photos', { params })
       .pipe(
         tap((data) => {
           this._orientations.next(this.getOrientation(data.media));
           this._images.next(data.media);
-          this._dates.next(data.dates);
         }),
       );
   }
@@ -89,5 +120,12 @@ export class MediaService {
       imageOrientations[image.id] = image.Orientation ?? '0';
     });
     return imageOrientations;
+  }
+
+  setFilter(filter: [string, number]): void {
+    console.info('here', filter);
+    const [year, month] = filter;
+    this.fetchMedia({ year, month }).subscribe();
+    window.localStorage.setItem('filter', JSON.stringify({ year, month }));
   }
 }

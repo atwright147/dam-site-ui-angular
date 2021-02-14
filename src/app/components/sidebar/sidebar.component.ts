@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit {
     );
   }
 
-  setFilter(...args) {
-    console.info(args);
+  setFilter(year: string, month: number): void {
+    this.mediaService.setFilter([year, month]);
   }
 }

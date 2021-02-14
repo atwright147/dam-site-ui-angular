@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MediaService } from './services/media.service';
+import { IFilter, MediaService } from './services/media.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.mediaService.fetch().subscribe();
+    const filter = JSON.parse(window.localStorage.getItem('filter')) as IFilter;
+    this.mediaService.fetchDates().subscribe();
+    this.mediaService.fetchMedia(filter).subscribe();
   }
 }
