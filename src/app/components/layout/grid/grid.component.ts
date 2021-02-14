@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { IFile } from '../../../interfaces/files.interface';
@@ -12,6 +12,7 @@ import { MediaService } from '../../../services/media.service';
 })
 export class GridComponent implements OnInit, OnDestroy {
   form = this.fb.group({});
+  subs: Subscription[] = [];
   formChangeSub: Subscription;
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
@@ -23,32 +24,42 @@ export class GridComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.mediaService.fetch()
-      .subscribe(
-        (data) => {
-          this.images = data.media;
+    const imagesSub = this.mediaService.images$.subscribe(
+      (data) => {
+        this.images = data;
 
-          const controls = {};
-          for (const image of this.images) {
-            controls[image.id] = [{ value: false, disabled: false }];
-          }
-          this.form = this.fb.group(controls);
+        this.form = this.fb.group({
+          checkboxes: this.fb.group({}),
+        });
 
-          this.formChangeSub = this.form.valueChanges.subscribe((val) => {
+        const checkboxes = this.form.get('checkboxes') as FormGroup;
+        this.images?.forEach((item: IFile) => {
+          checkboxes.addControl(`${item.id}`, new FormControl(false));
+        });
+
+        const formChangesSub = this.form.valueChanges.subscribe(
+          (val) => {
             const selection = [];
             const previewSelection = [];
-            Object.keys(val).forEach((key: string) => {
-              if (val[key]) {
+
+            Object.keys(val.checkboxes).forEach((key: string) => {
+              if (val.checkboxes[key]) {
                 selection.push(this.images.filter(item => item.id.toString() === key)[0]);
                 previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
               }
             });
+
             this.mediaService.selected = selection;
             this.mediaService.previewSelection = previewSelection.splice(0, 6);
-          });
-        },
-        (err) => console.debug(err),
-      );
+          },
+          console.debug,
+        );
+        this.subs.push(formChangesSub);
+      },
+      console.debug,
+    );
+
+    this.subs.push(imagesSub);
   }
 
   ngOnDestroy() {
