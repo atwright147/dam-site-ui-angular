@@ -89,12 +89,11 @@ export class MediaService {
    * Use to initiate BehaviorSubjects
    */
   fetchMedia(filter: IFilter) {
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('year', filter.year);
 
-    if (filter.month) {
-      console.info('here');
-      params.set('month', String(filter.month));
+    if (typeof filter.month === 'number') {
+      params = params.append('month', String(filter.month));
     }
 
     return this.http
@@ -123,7 +122,6 @@ export class MediaService {
   }
 
   setFilter(filter: [string, number]): void {
-    console.info('here', filter);
     const [year, month] = filter;
     this.fetchMedia({ year, month }).subscribe();
     window.localStorage.setItem('filter', JSON.stringify({ year, month }));
