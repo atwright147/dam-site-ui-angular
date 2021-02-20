@@ -113,7 +113,7 @@ export class MediaService {
     return this.http.get('/api/v1/folders');
   }
 
-  getOrientation(images: IFile[]): Record<string, string> {
+  getOrientation(images: IFile[] = []): Record<string, string> {
     const imageOrientations: Record<string, string> = {};
     images.forEach(image => {
       imageOrientations[image.id] = image.Orientation ?? '0';
