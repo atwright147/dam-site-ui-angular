@@ -24,7 +24,8 @@ export class MultiCheckDirective implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.checkboxes = this.hostElement.nativeElement.querySelectorAll('input[type="checkbox"]'), 500);
+    // TODO: stop using setTimeout and convert to QueryList subscribe
+    setTimeout(() => this.checkboxes = this.hostElement.nativeElement.querySelectorAll('input[type="checkbox"]'), 1000);
   }
 
   @HostListener('click', ['$event'])
