@@ -10,23 +10,26 @@ import { PanelComponent } from '../panel/panel.component';
 })
 export class AccordionComponent implements OnDestroy, AfterContentInit {
   @Input() initOpenFirst = false;
-  @ContentChildren(PanelComponent) panels: QueryList<PanelComponent>;
+  @ContentChildren(PanelComponent, { emitDistinctChangesOnly: true }) panels: QueryList<PanelComponent>;
   hasPanelRefs = true;
   subscriptions: Subscription[] = [];
 
   ngAfterContentInit() {
-    setTimeout(() => {
-      this.panels.toArray().forEach((panel: PanelComponent) => {
-        const sub = panel.toggle.subscribe(
-          () => this.openPanel(panel),
-        );
-        this.subscriptions.push(sub);
-      });
+    const panelChangesSub = this.panels.changes.subscribe(
+      () => {
+        this.panels.toArray().forEach((panel: PanelComponent) => {
+          const sub = panel.toggle.subscribe(
+            () => this.openPanel(panel),
+          );
+          this.subscriptions.push(sub);
+        });
 
-      if (this.initOpenFirst) {
-        this.panels.first.isOpen = true;
-      }
-    }, 250);
+        if (this.initOpenFirst) {
+          this.panels.first.isOpen = true;
+        }
+      },
+    );
+    this.subscriptions.push(panelChangesSub);
   }
 
   ngOnDestroy() {
