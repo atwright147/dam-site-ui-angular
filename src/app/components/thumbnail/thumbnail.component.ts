@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 // https://alligator.io/angular/custom-form-control/
@@ -27,6 +27,8 @@ export class ThumbnailComponent implements ControlValueAccessor {
   set orientation(value: string) {
     this.orientationClassName = `exif-orientation-${value}`;
   }
+
+  constructor(public elem: ElementRef) { }
 
   // Function to call when the model changes.
   onChange = (value: boolean) => {

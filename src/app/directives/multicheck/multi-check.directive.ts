@@ -1,17 +1,19 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { AfterContentInit, ContentChildren, Directive, ElementRef, HostListener, Input, QueryList } from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
+import { ThumbnailComponent } from '../../components/thumbnail/thumbnail.component';
 
 const range = (a: number, b: number) => Array(Math.abs(a - b) + 1).fill(a).map((v: number, i: number) => v + i * (a > b ? -1 : 1));
 
 @Directive({
   selector: '[appMultiCheck]'
 })
-export class MultiCheckDirective implements AfterViewInit {
+export class MultiCheckDirective implements AfterContentInit {
   @Input('appMultiCheck') formGroupName: string;
+  @ContentChildren(ThumbnailComponent, { emitDistinctChangesOnly: true }) thumbnails: QueryList<ThumbnailComponent>;
 
   hostElement: ElementRef<Element>;
   formGroup: FormGroupDirective;
-  checkboxes: NodeList;
+  checkboxes: Element[];
   startIndex = 0;
   inputTargetState: boolean;
 
@@ -23,9 +25,12 @@ export class MultiCheckDirective implements AfterViewInit {
     this.formGroup = formGroupDirective;
   }
 
-  ngAfterViewInit(): void {
-    // TODO: stop using setTimeout and convert to QueryList subscribe
-    setTimeout(() => this.checkboxes = this.hostElement.nativeElement.querySelectorAll('input[type="checkbox"]'), 1000);
+  ngAfterContentInit(): void {
+    this.thumbnails.changes.subscribe(
+      () => {
+        this.checkboxes = this.thumbnails.map((element) => element.elem.nativeElement.querySelector('input[type="checkbox"]')) as Element[];
+      }
+    );
   }
 
   @HostListener('click', ['$event'])
