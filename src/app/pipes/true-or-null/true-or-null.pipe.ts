@@ -5,6 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TrueOrNullPipe implements PipeTransform {
   transform(value: unknown): boolean {
-    return value === true;
+    return value === true
+      ? true
+      : null;
   }
 }

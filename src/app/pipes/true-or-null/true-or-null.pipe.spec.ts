@@ -14,16 +14,16 @@ describe('TrueOrNullPipe', () => {
   describe('given anything other than true', () => {
     const scenarios = [
       { actual: true, expected: true },
-      { actual: false, expected: false },
-      { actual: {}, expected: false },
-      { actual: [], expected: false },
-      { actual: 'true', expected: false },
-      { actual: 'false', expected: false },
-      { actual: () => {}, expected: false },
+      { actual: false, expected: null },
+      { actual: {}, expected: null },
+      { actual: [], expected: null },
+      { actual: 'true', expected: null },
+      { actual: 'false', expected: null },
+      { actual: () => {}, expected: null },
     ];
 
     scenarios.forEach((scenario) => {
-      it(`should return ${scenario.expected} when value is ${scenario.actual}`, () => {
+      it(`should return ${scenario.expected} when value is ${JSON.stringify(scenario.actual)}`, () => {
         expect(pipe.transform(scenario.actual)).toEqual(scenario.expected);
       });
     });
