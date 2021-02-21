@@ -11,7 +11,8 @@
     "dev": "npm start",
     "stubs": "nodemon ./stubs/index.js",
     "dev:stubs": "npm start & npm run stubs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "typecheck:strict": "tsc --noEmit -p ./tsconfig.typecheck.json"
   },
   "private": true,
   "dependencies": {

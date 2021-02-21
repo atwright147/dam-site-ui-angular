@@ -23,7 +23,6 @@ export interface IFilter {
   providedIn: 'root'
 })
 export class MediaService {
-  orientations: Record<string, string>[] = [];
   private readonly _path = new BehaviorSubject<string>('');
   private readonly _images = new BehaviorSubject<IFile[]>([]);
   private readonly _orientations = new BehaviorSubject<Record<string, string>>({});

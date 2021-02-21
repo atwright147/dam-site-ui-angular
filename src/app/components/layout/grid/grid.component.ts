@@ -19,9 +19,7 @@ export class GridComponent implements OnInit, OnDestroy {
   images: IFile[] = [];
 
   //#region KeyValuePipe sorting functions
-  originalOrder = (a, b): number => {
-    return 0;
-  }
+  originalOrder = (): number => 0;
 
   valueAscOrder = (a, b): number => {
     return a.value.localeCompare(b.value);
