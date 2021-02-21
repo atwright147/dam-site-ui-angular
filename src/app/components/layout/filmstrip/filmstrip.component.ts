@@ -49,6 +49,8 @@ export class FilmstripComponent implements OnInit, OnDestroy {
         this.images = data;
 
         const checkboxes = this.form.get('checkboxes') as FormGroup;
+        this.emptyFormGroup(checkboxes);
+
         this.images?.forEach((item: IFile) => {
           checkboxes.addControl(`${item.id}`, new FormControl(false));
         });
@@ -80,6 +82,12 @@ export class FilmstripComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  emptyFormGroup(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(control => {
+      formGroup.removeControl(control);
+    });
   }
 
   @HostListener('document:keyup', ['$event']) moveFocus(event: KeyboardEvent) {
