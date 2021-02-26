@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { MediaService } from '../../services/media.service';
+import { RefineSelectionModalService } from '../../services/refine-selection-modal.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly mediaService: MediaService,
+    private readonly refineSelectionModalService: RefineSelectionModalService,
   ) { }
 
   ngOnInit() {
@@ -26,5 +28,9 @@ export class HeaderComponent implements OnInit {
 
   onSubmit() {
     this.mediaService.setPath(this.form.get('path').value);
+  }
+
+  showRefineSelectionUI(): void {
+    this.refineSelectionModalService.show();
   }
 }

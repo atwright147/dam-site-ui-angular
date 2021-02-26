@@ -22,6 +22,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { PanelComponent } from './components/panel/panel.component';
 import { TrueOrNullPipe } from './pipes/true-or-null/true-or-null.pipe';
+import { RefineSelectionComponent } from './components/refine-selection/refine-selection.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TrueOrNullPipe } from './pipes/true-or-null/true-or-null.pipe';
     AccordionComponent,
     PanelComponent,
     TrueOrNullPipe,
+    RefineSelectionComponent,
   ],
   imports: [
     AppRoutingModule,

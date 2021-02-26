@@ -1,0 +1,12 @@
+<div class="background"></div>
+
+<div class="dialog-container">
+  <div class="dialog">
+    <div class="header">
+      <button class="close" (click)="close()">&times;</button>
+    </div>
+    <ul>
+      <li *ngFor="let selectionItem of (selection$ | async)">{{selectionItem.FileName}}</li>
+    </ul>
+  </div>
+</div>

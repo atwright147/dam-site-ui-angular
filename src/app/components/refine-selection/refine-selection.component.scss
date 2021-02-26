@@ -1,0 +1,47 @@
+@import '../../../colours.scss';
+
+:host {
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.background {
+  background-color: black;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+.dialog {
+  box-sizing: inherit;
+  border-radius: 10px;
+  background-color: $darkGrey;
+  padding: 10px;
+  opacity: 1;
+  height: 100%;
+  width: 100%;
+
+  &-container {
+    box-sizing: inherit;
+    position: absolute;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.header {
+  text-align: right;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
