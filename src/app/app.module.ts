@@ -23,6 +23,7 @@ import { AccordionComponent } from './components/accordion/accordion.component';
 import { PanelComponent } from './components/panel/panel.component';
 import { TrueOrNullPipe } from './pipes/true-or-null/true-or-null.pipe';
 import { RefineSelectionComponent } from './components/refine-selection/refine-selection.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RefineSelectionComponent } from './components/refine-selection/refine-s
     PanelComponent,
     TrueOrNullPipe,
     RefineSelectionComponent,
+    CarouselComponent,
   ],
   imports: [
     AppRoutingModule,
