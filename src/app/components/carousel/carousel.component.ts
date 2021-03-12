@@ -12,15 +12,15 @@ export class CarouselComponent implements AfterViewInit, OnInit {
   //#endregion
   @ViewChildren('cellContainer', { emitDistinctChangesOnly: true }) cells: QueryList<ElementRef<HTMLElement>>;
 
-  cellCount: number; // cellCount set from cells-range input value
-  cellHeight: number; // = carousel.offsetHeight;
-  cellWidth: number; // = carousel.offsetWidth;
+  cellCount: number;
+  cellHeight: number;
+  cellWidth: number;
+  hostElement: ElementRef<HTMLElement>;
   isHorizontal = true;
   radius: number;
   rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
   selectedIndex = 0;
   theta: number;
-  hostElement: ElementRef<HTMLElement>;
 
   constructor(
     el: ElementRef<HTMLElement>,
