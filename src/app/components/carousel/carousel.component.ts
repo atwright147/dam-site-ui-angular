@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-carousel',
@@ -72,5 +72,23 @@ export class CarouselComponent implements AfterViewInit, OnInit {
     this.isHorizontal = true;
     this.rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
     this.changeCarousel();
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  onKeyup(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowLeft':
+        this.selectedIndex--;
+        this.rotateCarousel();
+        break;
+
+      case 'ArrowRight':
+        this.selectedIndex++;
+        this.rotateCarousel();
+        break;
+
+      case 'ArrowDown':
+        break;
+    }
   }
 }
