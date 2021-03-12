@@ -1,7 +1,7 @@
 <p>carousel works!</p>
 
 <div class="scene">
-  <div class="carousel">
+  <div class="carousel" #carousel>
     <div *ngFor="let item of selection; let idx = index;" class="carousel_cell__container" #cellContainer>
       <div class="carousel__cell">{{idx}}</div>
     </div>
