@@ -45,7 +45,7 @@ export class CarouselComponent implements AfterViewInit, OnInit {
     this.onOrientationChange();
   }
 
-  rotateCarousel(): void {
+  rotate(): void {
     const angle = this.theta * this.selectedIndex * -1;
     this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + this.rotateFn + '(' + angle + 'deg)';
 
@@ -56,7 +56,7 @@ export class CarouselComponent implements AfterViewInit, OnInit {
     });
   }
 
-  changeCarousel(): void {
+  change(): void {
     this.theta = 360 / this.cellCount;
     const cellSize = this.isHorizontal ? this.cellWidth : this.cellHeight;
     this.radius = Math.round((cellSize / 2) / Math.tan(Math.PI / this.cellCount));
@@ -76,13 +76,13 @@ export class CarouselComponent implements AfterViewInit, OnInit {
       }
     }
 
-    this.rotateCarousel();
+    this.rotate();
   }
 
   onOrientationChange(): void {
     this.isHorizontal = true;
     this.rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
-    this.changeCarousel();
+    this.change();
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -90,12 +90,12 @@ export class CarouselComponent implements AfterViewInit, OnInit {
     switch (event.key) {
       case 'ArrowLeft':
         this.selectedIndex--;
-        this.rotateCarousel();
+        this.rotate();
         break;
 
       case 'ArrowRight':
         this.selectedIndex++;
-        this.rotateCarousel();
+        this.rotate();
         break;
 
       case 'ArrowDown':
