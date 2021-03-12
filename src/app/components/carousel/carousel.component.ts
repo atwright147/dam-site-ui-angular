@@ -69,7 +69,6 @@ export class CarouselComponent implements AfterViewInit, OnInit {
   }
 
   onOrientationChange() {
-    console.info('here');
     this.isHorizontal = true;
     this.rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
     this.changeCarousel();
