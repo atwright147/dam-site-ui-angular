@@ -42,12 +42,12 @@ export class CarouselComponent implements AfterViewInit, OnInit {
 
     this.cellCount = this.cells.length;
 
-    this.onOrientationChange();
+    this.change();
   }
 
   rotate(): void {
     const angle = this.theta * this.selectedIndex * -1;
-    this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + this.rotateFn + '(' + angle + 'deg)';
+    this.carousel.nativeElement.style.transform = this.rotateFn + '(' + angle + 'deg)';
 
     const cellInner = this.carousel.nativeElement.querySelectorAll('.carousel__cell');
     cellInner.forEach((item: HTMLDivElement, index) => {
@@ -99,6 +99,7 @@ export class CarouselComponent implements AfterViewInit, OnInit {
         break;
 
       case 'ArrowDown':
+        console.info(this.selectedIndex);
         break;
     }
   }
