@@ -18,18 +18,6 @@ export class GridComponent implements OnInit, OnDestroy {
   orientations$ = this.mediaService.orientations$;
   images: IFile[] = [];
 
-  //#region KeyValuePipe sorting functions
-  originalOrder = (): number => 0;
-
-  valueAscOrder = (a, b): number => {
-    return a.value.localeCompare(b.value);
-  }
-
-  keyDescOrder = (a, b): number => {
-    return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
-  }
-  //#endregion
-
   constructor(
     private readonly fb: FormBuilder,
     private readonly mediaService: MediaService,
@@ -40,6 +28,48 @@ export class GridComponent implements OnInit, OnDestroy {
       checkboxes: this.fb.group({}),
     });
   }
+
+  @HostListener('document:keyup', ['$event']) keyEvent(event: KeyboardEvent) {
+    const target = event.target as HTMLInputElement;
+    if (target.type !== 'checkbox') {
+      return;
+    }
+
+    const dataIndex = parseInt((event.target as HTMLElement).dataset.index, 10);
+
+    /* eslint-disable no-console */
+    switch (event.key) {
+      case 'ArrowLeft':
+        console.info('left');
+        (document.querySelector(`input[type="checkbox"][data-index="${dataIndex - 1}"]`) as HTMLInputElement).focus();
+        break;
+
+      case 'ArrowRight':
+        console.info('right');
+        (document.querySelector(`input[type="checkbox"][data-index="${dataIndex + 1}"]`) as HTMLInputElement).focus();
+        break;
+
+      case 'ArrowUp':
+        console.info('up');
+        break;
+
+      case 'ArrowDown':
+        console.info('down');
+        break;
+
+      default:
+        break;
+    }
+    /* eslint-enable no-console */
+  }
+
+  //#region KeyValuePipe sorting functions
+  originalOrder = (): number => 0;
+
+  valueAscOrder = (a, b): number => a.value.localeCompare(b.value);
+
+  keyDescOrder = (a, b): number => a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+  //#endregion
 
   ngOnInit() {
     const imagesSub = this.mediaService.images$.subscribe(
@@ -78,40 +108,6 @@ export class GridComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
-  }
-
-  @HostListener('document:keyup', ['$event']) moveFocus(event: KeyboardEvent) {
-    const target = event.target as HTMLInputElement;
-    if (target.type !== 'checkbox') {
-      return;
-    }
-
-    const dataIndex = parseInt((event.target as HTMLElement).dataset.index, 10);
-
-    // tslint:disable:no-console
-    switch (event.key) {
-      case 'ArrowLeft':
-        console.info('left');
-        (document.querySelector(`input[type="checkbox"][data-index="${dataIndex - 1}"]`) as HTMLInputElement).focus();
-        break;
-
-      case 'ArrowRight':
-        console.info('right');
-        (document.querySelector(`input[type="checkbox"][data-index="${dataIndex + 1}"]`) as HTMLInputElement).focus();
-        break;
-
-      case 'ArrowUp':
-        console.info('up');
-        break;
-
-      case 'ArrowDown':
-        console.info('down');
-        break;
-
-      default:
-        break;
-    }
-    // tslint:enable:no-console
   }
 
   getControls(group: FormGroup) {

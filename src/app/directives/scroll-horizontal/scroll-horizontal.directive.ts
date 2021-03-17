@@ -14,10 +14,11 @@ export class ScrollHorizontalDirective {
 
   @HostListener('wheel', ['$event'])
   onScroll(event: WheelEvent): void {
-    const scrollAmount = 65;
-
     // https://codepen.io/anon/pen/rbzMwN
+    const scrollAmount = 65;
     event.preventDefault();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     event.deltaY > 0
       ? this.hostElement.nativeElement.scrollLeft += scrollAmount
       : this.hostElement.nativeElement.scrollLeft -= scrollAmount;
