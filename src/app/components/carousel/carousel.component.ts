@@ -10,12 +10,15 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { NgResizeObserver, ngResizeObserverProviders } from 'ng-resize-observer';
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [...ngResizeObserverProviders],
 })
 export class CarouselComponent implements AfterViewInit, OnInit {
   //#region
@@ -23,6 +26,8 @@ export class CarouselComponent implements AfterViewInit, OnInit {
   //#endregion
   @ViewChild('carousel') carousel: ElementRef<HTMLElement>;
   @ViewChildren('cellContainer', { emitDistinctChangesOnly: true }) cells: QueryList<ElementRef<HTMLElement>>;
+  height$ = this.resize$.pipe(map(entry => entry.contentRect.height));
+  width$ = this.resize$.pipe(map(entry => entry.contentRect.width));
 
   cellCount: number;
   cellHeight: number;
@@ -32,6 +37,10 @@ export class CarouselComponent implements AfterViewInit, OnInit {
   rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
   selectedIndex = 0;
   theta: number;
+
+  constructor(
+    private readonly resize$: NgResizeObserver,
+  ) {}
 
   ngOnInit(): void { }
 

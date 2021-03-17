@@ -5,8 +5,7 @@
     <div class="header">
       <button class="close" (click)="close()">&times;</button>
     </div>
-    <ul>
-      <li *ngFor="let selectionItem of (selection$ | async)">{{selectionItem.FileName}}</li>
-    </ul>
+
+    <app-carousel></app-carousel>
   </div>
 </div>
