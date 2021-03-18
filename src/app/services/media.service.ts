@@ -30,15 +30,17 @@ export class MediaService {
   private readonly _previewSelection = new BehaviorSubject<IFile[]>([]);
   private readonly _dates = new BehaviorSubject<string[]>([]);
 
-  constructor(
-    private readonly http: HttpClient,
-  ) {}
-
+  /* eslint-disable @typescript-eslint/member-ordering */
   images$: Observable<IFile[]> = this._images.asObservable();
   orientations$: Observable<Record<string, string>> = this._orientations.asObservable();
   selected$: Observable<IFile[]> = this._selected.asObservable();
   previewSelection$: Observable<IFile[]> = this._previewSelection.asObservable();
   dates$: Observable<string[]> = this._dates.asObservable();
+  /* eslint-enable @typescript-eslint/member-ordering */
+
+  constructor(
+    private readonly http: HttpClient,
+  ) {}
 
   get path$() {
     if (!this._path.value) {

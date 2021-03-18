@@ -25,14 +25,6 @@ export class MultiCheckDirective implements AfterContentInit {
     this.formGroup = formGroupDirective;
   }
 
-  ngAfterContentInit(): void {
-    this.thumbnails.changes.subscribe(
-      () => {
-        this.checkboxes = this.thumbnails.map((element) => element.elem.nativeElement.querySelector('input[type="checkbox"]')) as Element[];
-      }
-    );
-  }
-
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
     if (event.target === this.hostElement.nativeElement) {
@@ -95,5 +87,13 @@ export class MultiCheckDirective implements AfterContentInit {
 
       checkboxGroup.get(checkboxGroupKeys[index]).setValue(true);
     }
+  }
+
+  ngAfterContentInit(): void {
+    this.thumbnails.changes.subscribe(
+      () => {
+        this.checkboxes = this.thumbnails.map((element) => element.elem.nativeElement.querySelector('input[type="checkbox"]')) as Element[];
+      }
+    );
   }
 }

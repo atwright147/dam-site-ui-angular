@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SpinnerService {
-  private _counter = new BehaviorSubject(0);
+  private readonly _counter = new BehaviorSubject(0);
 
   constructor() { }
 
