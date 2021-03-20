@@ -221,6 +221,25 @@ export class CarouselComponent implements AfterViewInit, OnInit {
     private readonly resize$: NgResizeObserver,
   ) {}
 
+  @HostListener('window:keyup', ['$event'])
+  onKeyup(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowLeft':
+        this.selectedIndex--;
+        this.rotate();
+        break;
+
+      case 'ArrowRight':
+        this.selectedIndex++;
+        this.rotate();
+        break;
+
+      case 'ArrowDown':
+        console.info(this.selectedIndex);
+        break;
+    }
+  }
+
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
@@ -271,24 +290,5 @@ export class CarouselComponent implements AfterViewInit, OnInit {
     this.isHorizontal = true;
     this.rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
     this.change();
-  }
-
-  @HostListener('window:keyup', ['$event'])
-  onKeyup(event: KeyboardEvent): void {
-    switch (event.key) {
-      case 'ArrowLeft':
-        this.selectedIndex--;
-        this.rotate();
-        break;
-
-      case 'ArrowRight':
-        this.selectedIndex++;
-        this.rotate();
-        break;
-
-      case 'ArrowDown':
-        console.info(this.selectedIndex);
-        break;
-    }
   }
 }

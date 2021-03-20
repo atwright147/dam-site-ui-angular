@@ -16,12 +16,6 @@ export class AppComponent implements OnInit {
     private readonly refineSelectionModalService: RefineSelectionModalService,
   ) { }
 
-  ngOnInit() {
-    const filter = JSON.parse(window.localStorage.getItem('filter')) as IFilter;
-    this.mediaService.fetchDates().subscribe();
-    this.mediaService.fetchMedia(filter).subscribe();
-  }
-
   @HostListener('document:keyup', ['$event']) showSelectionRefinementModal(event: KeyboardEvent) {
     if (event.ctrlKey && event.key === 'b') {
       event.preventDefault();
@@ -37,5 +31,11 @@ export class AppComponent implements OnInit {
         this.refineSelectionModalService.show();
       }
     }
+  }
+
+  ngOnInit() {
+    const filter = JSON.parse(window.localStorage.getItem('filter')) as IFilter;
+    this.mediaService.fetchDates().subscribe();
+    this.mediaService.fetchMedia(filter).subscribe();
   }
 }
