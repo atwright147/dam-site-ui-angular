@@ -3,7 +3,7 @@
 <div class="scene">
   <div class="carousel" #carousel>
     <div *ngFor="let item of selection; let idx = index;" class="carousel_cell__container" #cellContainer>
-      <div class="carousel__cell">{{idx}}</div>
+      <div class="carousel__cell" [ngStyle]="{'background-image': 'url(&quot;/api/v1/thumb/' + item.id + '&quot;)'}"></div>
     </div>
   </div>
 </div>
