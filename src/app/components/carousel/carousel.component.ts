@@ -40,22 +40,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
   rotationIndex = 0;
   theta: number;
 
-  private _selectionIndex = 0;
   private readonly subs: Subscription[] = [];
-
-  set selectionIndex(value: number) {
-    if (value > this.selected.length) {
-      this._selectionIndex = value / this.selected.length;
-    } else if (value < 0) {
-      this._selectionIndex = Math.abs(value) / this.selected.length;
-    } else {
-      this._selectionIndex = value;
-    }
-  }
-
-  get selectionIndex() {
-    return this._selectionIndex;
-  }
 
   constructor(
     private readonly mediaService: MediaService,
@@ -67,13 +52,11 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
     switch (event.key) {
       case 'ArrowLeft':
         this.rotationIndex--;
-        this.selectionIndex = this.rotationIndex;
         this.rotate();
         break;
 
       case 'ArrowRight':
         this.rotationIndex++;
-        this.selectionIndex = this.rotationIndex;
         this.rotate();
         break;
 
