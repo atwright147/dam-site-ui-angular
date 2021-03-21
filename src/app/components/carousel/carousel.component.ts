@@ -78,7 +78,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
         break;
 
       case 'ArrowDown':
-        console.info('cellIndex', this.getCellIndex(this.rotationIndex, this.selected.length));
+        console.info('Item to remove from selection:', this.cellIndex);
         break;
     }
   }
@@ -145,9 +145,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
     this.change();
   }
 
-  private getCellIndex(rotationIndex: number, cellQuantity: number): number {
-    const remainder = Math.floor(Math.abs(rotationIndex / (cellQuantity)));
-    const remainderMultiple = remainder * cellQuantity;
-    return (rotationIndex - remainderMultiple);
+  private get cellIndex(): number {
+    const remainder = Math.floor(Math.abs(this.rotationIndex / this.selected.length));
+    return this.rotationIndex - (remainder * this.selected.length);
   }
 }
