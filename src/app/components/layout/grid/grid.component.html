@@ -1,9 +1,13 @@
-<form [formGroup]="form" class="filmstrip">
-  <app-thumbnail
-    *ngFor="let control of getControls(form); let i = index;"
-    [formControlName]="control"
-    imageUrl="/api/v1/thumb/{{images[i].id}}"
-    [imageId]="images[i].id"
-    [index]="i"
-  ></app-thumbnail>
+<form [formGroup]="form" class="grid">
+  <div formGroupName="checkboxes" appMultiCheck="checkboxes">
+    <app-thumbnail
+      *ngFor="let control of form.get('checkboxes').value | keyvalue:originalOrder; let i = index;"
+      [formControlName]="control.key"
+      [value]="control.value"
+      imageUrl="/api/v1/thumb/{{control.key}}"
+      [imageId]="control.key"
+      [index]="i"
+      [orientation]="(orientations$ | async)[control.key]"
+    ></app-thumbnail>
+  </div>
 </form>
