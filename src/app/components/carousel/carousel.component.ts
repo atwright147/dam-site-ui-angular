@@ -26,13 +26,16 @@ import { IFile } from '../../interfaces/files.interface';
   providers: [...ngResizeObserverProviders],
 })
 export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDestroy, OnInit {
+  @ViewChild('scene') scene: ElementRef<HTMLElement>;
   @ViewChild('carousel') carousel: ElementRef<HTMLElement>;
-  @ViewChildren('cellContainer', { emitDistinctChangesOnly: true }) cells: QueryList<ElementRef<HTMLElement>>;
+  @ViewChildren('cellContainer', { emitDistinctChangesOnly: true }) _cells: QueryList<ElementRef<HTMLElement>>;
   height$ = this.resize$.pipe(map(entry => entry.contentRect.height));
   width$ = this.resize$.pipe(map(entry => entry.contentRect.width));
   selected: IFile[];
 
-  cellRect: DOMRect;
+  cells;
+
+  sceneRect: DOMRect;
   cellCount: number;
   cellHeight: number;
   cellWidth: number;
@@ -82,11 +85,16 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   }
 
   ngAfterViewInit(): void {
+    this.cells = this._cells;
     this.change();
   }
 
   ngAfterViewChecked() {
-    this.cells.changes.subscribe(this.change);
+    this.cells.changes.subscribe(
+      () => {
+        this.cellCount = this.cells.length;
+        this.change();
+      });
   }
 
   rotate(): void {
@@ -102,10 +110,10 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
 
   // use an arrow function to workaround issues with reference to `this`
   change = (): void => {
-    this.cellRect = this.cells.first.nativeElement.getBoundingClientRect();
+    this.sceneRect = this.scene.nativeElement.getBoundingClientRect();
 
-    this.cellHeight = this.cellRect.height;
-    this.cellWidth = this.cellRect.width;
+    this.cellHeight = this.sceneRect.height;
+    this.cellWidth = this.sceneRect.width;
 
     this.cellCount = this.cells.length;
 
