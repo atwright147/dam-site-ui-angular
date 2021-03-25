@@ -165,4 +165,11 @@ export class MediaService implements OnDestroy {
     this.fetchMedia({ year, month }).subscribe();
     window.localStorage.setItem('filter', JSON.stringify({ year, month }));
   }
+
+  removeFromSelection(index: number): void {
+    const idToRemove = this._selected.value[index].id;
+    const checkboxes = this.form.get('checkboxes') as FormGroup;
+
+    checkboxes.controls[idToRemove].setValue(false);
+  }
 }

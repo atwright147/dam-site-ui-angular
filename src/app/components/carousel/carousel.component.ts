@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -24,13 +25,14 @@ import { IFile } from '../../interfaces/files.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [...ngResizeObserverProviders],
 })
-export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
+export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDestroy, OnInit {
   @ViewChild('carousel') carousel: ElementRef<HTMLElement>;
   @ViewChildren('cellContainer', { emitDistinctChangesOnly: true }) cells: QueryList<ElementRef<HTMLElement>>;
   height$ = this.resize$.pipe(map(entry => entry.contentRect.height));
   width$ = this.resize$.pipe(map(entry => entry.contentRect.width));
   selected: IFile[];
 
+  cellRect: DOMRect;
   cellCount: number;
   cellHeight: number;
   cellWidth: number;
@@ -61,7 +63,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
         break;
 
       case 'ArrowDown':
-        console.info('Item to remove from selection:', this.cellIndex);
+        this.mediaService.removeFromSelection(this.cellIndex);
+        this.change();
         break;
     }
   }
@@ -74,18 +77,16 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
     this.subs.push(selectedSub);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   ngAfterViewInit(): void {
-    const cellRect = this.cells.first.nativeElement.getBoundingClientRect();
-    this.cellHeight = cellRect.height;
-    this.cellWidth = cellRect.width;
-
-    this.cellCount = this.cells.length;
-
     this.change();
+  }
+
+  ngAfterViewChecked() {
+    this.cells.changes.subscribe(this.change);
   }
 
   rotate(): void {
@@ -100,6 +101,13 @@ export class CarouselComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   change(): void {
+    this.cellRect = this.cells.first.nativeElement.getBoundingClientRect();
+
+    this.cellHeight = this.cellRect.height;
+    this.cellWidth = this.cellRect.width;
+
+    this.cellCount = this.cells.length;
+
     this.theta = 360 / this.cellCount;
     const cellSize = this.isHorizontal ? this.cellWidth : this.cellHeight;
     this.radius = Math.round((cellSize / 2) / Math.tan(Math.PI / this.cellCount));
