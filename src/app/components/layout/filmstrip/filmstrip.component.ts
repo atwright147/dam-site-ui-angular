@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { IFile } from '../../../interfaces/files.interface';
@@ -11,7 +10,7 @@ import { MediaService } from '../../../services/media.service';
   styleUrls: ['./filmstrip.component.scss']
 })
 export class FilmstripComponent implements OnInit, OnDestroy {
-  form = this.fb.group({});
+  form = this.mediaService.form;
   subs: Subscription[] = [];
   selected$ = this.mediaService.selected$;
   previewSelection$ = this.mediaService.previewSelection$;
@@ -19,15 +18,8 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   images: IFile[] = [];
 
   constructor(
-    private readonly fb: FormBuilder,
     private readonly mediaService: MediaService,
-  ) {
-    // fixes issue where form was rendering before initiated
-    // see: https://github.com/KillerCodeMonkey/ngx-quill/issues/187#issuecomment-695796458
-    this.form = this.fb.group({
-      checkboxes: this.fb.group({}),
-    });
-  }
+  ) { }
 
   @HostListener('document:keyup', ['$event']) keyEvent(event: KeyboardEvent) {
     const target = event.target as HTMLInputElement;
@@ -73,36 +65,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const imagesSub = this.mediaService.images$.subscribe(
-      (data) => {
-        this.images = data;
-
-        const checkboxes = this.form.get('checkboxes') as FormGroup;
-        this.emptyFormGroup(checkboxes);
-
-        this.images?.forEach((item: IFile) => {
-          checkboxes.addControl(`${item.id}`, new FormControl(false));
-        });
-
-        const formChangesSub = this.form.valueChanges.subscribe(
-          (val) => {
-            const selection = [];
-            const previewSelection = [];
-
-            Object.keys(val.checkboxes).forEach((key: string) => {
-              if (val.checkboxes[key]) {
-                selection.push(this.images.filter(item => item.id.toString() === key)[0]);
-                previewSelection.push(this.images.filter(item => item.id.toString() === key)[0]);
-              }
-            });
-
-            this.mediaService.selected = selection;
-            this.mediaService.previewSelection = previewSelection.splice(0, 6);
-          },
-          console.debug,
-        );
-        this.subs.push(formChangesSub);
-      },
-      console.debug,
+      (data) => this.images = data,
     );
 
     this.subs.push(imagesSub);
@@ -110,23 +73,5 @@ export class FilmstripComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
-  }
-
-  emptyFormGroup(formGroup: FormGroup): void {
-    Object.keys(formGroup.controls).forEach(control => {
-      formGroup.removeControl(control);
-    });
-  }
-
-  getControls(group: FormGroup) {
-    if (group instanceof FormArray) {
-      return group.controls;
-    }
-
-    try {
-      return Object.keys(group.controls);
-    } catch (err) {
-      console.debug(err);
-    }
   }
 }

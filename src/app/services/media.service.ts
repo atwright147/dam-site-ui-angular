@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
 import { IFile } from '../interfaces/files.interface';
+import { emptyFormGroup } from '../utils/form';
 
 export interface IMedia {
   quantity: number;
@@ -22,7 +25,10 @@ export interface IFilter {
 @Injectable({
   providedIn: 'root'
 })
-export class MediaService {
+export class MediaService implements OnDestroy {
+  readonly form = this.fb.group({});
+  private readonly subs: Subscription[] = [];
+
   private readonly _path = new BehaviorSubject<string>('');
   private readonly _images = new BehaviorSubject<IFile[]>([]);
   private readonly _orientations = new BehaviorSubject<Record<string, string>>({});
@@ -40,7 +46,55 @@ export class MediaService {
 
   constructor(
     private readonly http: HttpClient,
-  ) {}
+    private readonly fb: FormBuilder,
+  ) {
+    // fixes issue where form was rendering before initiated
+    // see: https://github.com/KillerCodeMonkey/ngx-quill/issues/187#issuecomment-695796458
+    this.form = this.fb.group({
+      checkboxes: this.fb.group({}),
+    });
+
+    this.init();
+  }
+
+  init(): void {
+    let images: IFile[] = [];
+    const imageSub = this.images$.subscribe(
+      (data) => {
+        images = data;
+
+        const checkboxes = this.form.get('checkboxes') as FormGroup;
+        emptyFormGroup(checkboxes);
+
+        images?.forEach((item: IFile) => {
+          checkboxes.addControl(`${item.id}`, new FormControl(false));
+        });
+      },
+    );
+
+    const formChangesSub = this.form.valueChanges.subscribe(
+      (val) => {
+        const selection = [];
+        const previewSelection = [];
+
+        Object.keys(val.checkboxes).forEach((key: string) => {
+          if (val.checkboxes[key]) {
+            selection.push(images.filter(item => item.id.toString() === key)[0]);
+            previewSelection.push(images.filter(item => item.id.toString() === key)[0]);
+          }
+        });
+
+        this._selected.next(selection);
+        this._previewSelection.next(previewSelection.splice(0, 6));
+      },
+    );
+
+    this.subs.push(formChangesSub, imageSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
+  }
 
   get path$() {
     if (!this._path.value) {
@@ -53,22 +107,6 @@ export class MediaService {
   setPath(path: string) {
     localStorage.setItem('path', path);
     this._path.next(path);
-  }
-
-  get selected() {
-    return this._selected.value;
-  }
-
-  set selected(images: IFile[]) {
-    this._selected.next(images);
-  }
-
-  get previewSelection() {
-    return this._previewSelection.value;
-  }
-
-  set previewSelection(images: IFile[]) {
-    this._previewSelection.next(images);
   }
 
   /**
