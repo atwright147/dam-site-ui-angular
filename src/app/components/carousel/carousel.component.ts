@@ -91,12 +91,12 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
 
   rotate(): void {
     const angle = this.theta * this.rotationIndex * -1;
-    this.carousel.nativeElement.style.transform = this.rotateFn + '(' + angle + 'deg)';
+    this.carousel.nativeElement.style.transform = `${this.rotateFn}(${angle}deg)`;
 
     const cellInner = this.carousel.nativeElement.querySelectorAll('.carousel__cell');
     cellInner.forEach((item: HTMLDivElement, index) => {
       const itemAngle = (this.rotationIndex - index++) * this.theta;
-      item.style.transform = this.rotateFn + '(' + itemAngle + 'deg)';
+      item.style.transform = `${this.rotateFn}(${itemAngle}deg)`;
     });
   }
 
@@ -119,7 +119,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
         // visible cell
         cell.nativeElement.style.opacity = '1';
         const cellAngle = this.theta * i;
-        cell.nativeElement.style.transform = this.rotateFn + '(' + cellAngle + 'deg) translateZ(' + this.radius + 'px)';
+        cell.nativeElement.style.transform = `${this.rotateFn}(${cellAngle}deg) translateZ(${this.radius}px)`;
       } else {
         // hidden cell
         cell.nativeElement.style.opacity = '0';
