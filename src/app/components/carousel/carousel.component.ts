@@ -100,7 +100,8 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
     });
   }
 
-  change(): void {
+  // use an arrow function to workaround issues with reference to `this`
+  change = (): void => {
     this.cellRect = this.cells.first.nativeElement.getBoundingClientRect();
 
     this.cellHeight = this.cellRect.height;
@@ -128,7 +129,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
     }
 
     this.rotate();
-  }
+  };
 
   onOrientationChange(): void {
     this.isHorizontal = true;
