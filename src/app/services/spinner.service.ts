@@ -7,11 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class SpinnerService {
   private readonly _counter = new BehaviorSubject(0);
 
-  constructor() { }
-
-  get counter(): Observable<number> {
-    return this._counter.asObservable();
-  }
+  /* eslint-disable @typescript-eslint/member-ordering */
+  readonly counter$ = this._counter.asObservable();
+  /* eslint-enable @typescript-eslint/member-ordering */
 
   add(): void {
     this._counter.next(this._counter.value + 1);

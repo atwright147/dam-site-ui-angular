@@ -1,4 +1,4 @@
-<div class="grid grid-{{numSelected}}">
+<div class="grid grid-{{(previewSelection$ | async).length}}">
   <figure *ngFor="let image of previewSelection$ | async" class="thumb">
     <!-- TODO: handle thumb url better -->
     <div class="constraint" [ngStyle]="{'background-image': 'url(&quot;' + '/api/v1/thumb/' + image.id + '&quot;)'}"></div>

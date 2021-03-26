@@ -7,20 +7,10 @@ import { MediaService } from '../../services/media.service';
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit {
+export class PreviewComponent {
   previewSelection$ = this.mediaService.previewSelection$;
 
   constructor(
     private readonly mediaService: MediaService,
   ) { }
-
-  ngOnInit() {}
-
-  get numSelected() {
-    let selected;
-    this.previewSelection$.subscribe(
-      (data) => selected = data,
-    );
-    return selected.length;
-  }
 }

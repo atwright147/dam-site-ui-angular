@@ -7,7 +7,7 @@ import { SpinnerService } from '../../services/spinner.service';
   styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent {
-  counter = this.spinnerService.counter;
+  readonly counter$ = this.spinnerService.counter$;
 
   constructor(
     private readonly spinnerService: SpinnerService,

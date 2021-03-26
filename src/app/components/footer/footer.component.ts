@@ -7,24 +7,10 @@ import { MediaService } from '../../services/media.service';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   selected$ = this.mediaService.selected$;
 
   constructor(
     private readonly mediaService: MediaService,
   ) { }
-
-  ngOnInit() { }
-
-  get selectionLength() {
-    let selected;
-    this.selected$.subscribe(
-      (data) => {
-        selected = data;
-        // console.info(data);
-      },
-    );
-    return selected.length;
-  }
-
 }
