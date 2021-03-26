@@ -2,10 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MediaService } from './media.service';
+import { FormBuilder } from '@angular/forms';
 
 describe('MediaService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [ HttpClientTestingModule ],
+    providers: [ FormBuilder ],
   }));
 
   it('should be created', () => {

@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { CarouselComponent } from './carousel.component';
 
@@ -8,7 +11,9 @@ describe('CarouselComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CarouselComponent ]
+      declarations: [ CarouselComponent ],
+      imports: [ HttpClientTestingModule ],
+      providers: [ HttpClient, FormBuilder ],
     })
     .compileComponents();
   });

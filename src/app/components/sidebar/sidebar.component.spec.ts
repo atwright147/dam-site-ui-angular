@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { SidebarComponent } from './sidebar.component';
 
@@ -11,6 +12,7 @@ describe('SidebarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ SidebarComponent ],
       imports: [ HttpClientTestingModule ],
+      providers: [ FormBuilder ]
     })
     .compileComponents();
   });

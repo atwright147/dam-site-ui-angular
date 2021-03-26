@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { FooterComponent } from './footer.component';
 
@@ -11,6 +12,7 @@ describe('FooterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ FooterComponent ],
       imports: [ HttpClientTestingModule ],
+      providers: [ FormBuilder ],
     })
     .compileComponents();
   }));

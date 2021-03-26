@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
+import { FormBuilder } from '@angular/forms';
 
 import { PreviewComponent } from './preview.component';
 
@@ -12,6 +12,7 @@ describe('PreviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PreviewComponent ],
       imports: [ HttpClientTestingModule ],
+      providers: [ FormBuilder ],
     })
     .compileComponents();
   }));
