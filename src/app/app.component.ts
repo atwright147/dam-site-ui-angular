@@ -16,8 +16,9 @@ export class AppComponent implements OnInit {
     private readonly refineSelectionModalService: RefineSelectionModalService,
   ) { }
 
-  @HostListener('document:keyup', ['$event']) showSelectionRefinementModal(event: KeyboardEvent) {
-    if (event.ctrlKey && event.key === 'b') {
+  // using the `keydown` is bad for a11y but it is the only way to catch the `metaKey` property
+  @HostListener('document:keydown', ['$event']) showSelectionRefinementModal(event: KeyboardEvent) {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
       event.preventDefault();
       let state: boolean;
 
