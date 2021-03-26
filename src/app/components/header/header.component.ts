@@ -11,6 +11,7 @@ import { RefineSelectionModalService } from '../../services/refine-selection-mod
 })
 export class HeaderComponent implements OnInit {
   form: FormGroup;
+  selected$ = this.mediaService.selected$;
 
   constructor(
     private readonly fb: FormBuilder,

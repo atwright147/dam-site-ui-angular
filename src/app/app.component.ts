@@ -1,5 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
+import { IFile } from './interfaces/files.interface';
 import { IFilter, MediaService } from './services/media.service';
 import { RefineSelectionModalService } from './services/refine-selection-modal.service';
 
@@ -8,8 +10,10 @@ import { RefineSelectionModalService } from './services/refine-selection-modal.s
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnDestroy, OnInit {
   showRefineSelectionModal$ = this.refineSelectionModalService.showRefineSelectionModal$;
+  selected: IFile[];
+  subs: Subscription[];
 
   constructor(
     private readonly mediaService: MediaService,
@@ -19,6 +23,10 @@ export class AppComponent implements OnInit {
   // using the `keydown` is bad for a11y but it is the only way to catch the `metaKey` property
   @HostListener('document:keydown', ['$event']) showSelectionRefinementModal(event: KeyboardEvent) {
     if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
+      if (!this.selected.length) {
+        return;
+      }
+
       event.preventDefault();
       let state: boolean;
 
@@ -34,9 +42,18 @@ export class AppComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  ngOnInit(): void {
     const filter = JSON.parse(window.localStorage.getItem('filter')) as IFilter;
     this.mediaService.fetchDates().subscribe();
     this.mediaService.fetchMedia(filter).subscribe();
+    const selectedSub = this.mediaService.selected$.subscribe(
+      (data) => this.selected = data,
+    );
+
+    this.subs.push(selectedSub);
   }
 }

@@ -21,9 +21,10 @@ import { MultiCheckDirective } from './directives/multicheck/multi-check.directi
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { PanelComponent } from './components/panel/panel.component';
-import { TrueOrNullPipe } from './pipes/true-or-null/true-or-null.pipe';
 import { RefineSelectionComponent } from './components/refine-selection/refine-selection.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
+
+import { BoolPipe, NegatePipe, TrueOrNullPipe } from './pipes';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,8 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     TrueOrNullPipe,
     RefineSelectionComponent,
     CarouselComponent,
+    BoolPipe,
+    NegatePipe,
   ],
   imports: [
     AppRoutingModule,
