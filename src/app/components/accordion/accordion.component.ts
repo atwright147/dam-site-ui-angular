@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, Input, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, OnDestroy, ChangeDetectionStrategy, AfterContentInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { PanelComponent } from '../panel/panel.component';
@@ -9,9 +9,7 @@ import { PanelComponent } from '../panel/panel.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionComponent implements OnDestroy, AfterContentInit {
-  @Input() initOpenFirst = false;
   @ContentChildren(PanelComponent, { emitDistinctChangesOnly: true }) panels: QueryList<PanelComponent>;
-  hasPanelRefs = true;
   subscriptions: Subscription[] = [];
 
   ngAfterContentInit(): void {
@@ -23,10 +21,6 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
           );
           this.subscriptions.push(sub);
         });
-
-        if (this.initOpenFirst) {
-          this.panels.first.isOpen = true;
-        }
       },
     );
     this.subscriptions.push(panelChangesSub);
