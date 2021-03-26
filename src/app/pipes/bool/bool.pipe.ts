@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-const isObject = (value) => {
+const isObject = (value): boolean => {
   const type = typeof value;
   return value != null && (type === 'object' || type === 'function');
 };

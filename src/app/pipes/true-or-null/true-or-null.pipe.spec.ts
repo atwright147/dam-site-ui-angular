@@ -19,7 +19,7 @@ describe('TrueOrNullPipe', () => {
       { actual: [], expected: null },
       { actual: 'true', expected: null },
       { actual: 'false', expected: null },
-      { actual: () => {}, expected: null },
+      { actual: (): void => {}, expected: null },
     ];
 
     scenarios.forEach((scenario) => {

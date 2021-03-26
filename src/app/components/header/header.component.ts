@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
     private readonly refineSelectionModalService: RefineSelectionModalService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.mediaService.path$.subscribe(data => {
       this.form = this.fb.group({
         path: data,
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.mediaService.setPath(this.form.get('path').value);
   }
 

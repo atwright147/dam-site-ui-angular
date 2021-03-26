@@ -89,7 +89,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
     this.change();
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     this.cells.changes.subscribe(
       () => {
         this.cellCount = this.cells.length;

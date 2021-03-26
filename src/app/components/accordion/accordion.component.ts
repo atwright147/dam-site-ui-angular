@@ -14,7 +14,7 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
   hasPanelRefs = true;
   subscriptions: Subscription[] = [];
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     const panelChangesSub = this.panels.changes.subscribe(
       () => {
         this.panels.toArray().forEach((panel: PanelComponent) => {
@@ -32,11 +32,11 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
     this.subscriptions.push(panelChangesSub);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  openPanel(panel: PanelComponent) {
+  openPanel(panel: PanelComponent): void {
     this.panels.toArray().forEach(p => {
       if (p !== panel) {
         p.isOpen = false;

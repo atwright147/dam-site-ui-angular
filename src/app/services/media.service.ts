@@ -96,7 +96,7 @@ export class MediaService implements OnDestroy {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
-  get path$() {
+  get path$(): Observable<string> {
     if (!this._path.value) {
       const newPath = !localStorage.getItem('path') ? '/' : localStorage.getItem('path');
       this._path.next(newPath);
@@ -104,7 +104,7 @@ export class MediaService implements OnDestroy {
     return this._path.asObservable();
   }
 
-  setPath(path: string) {
+  setPath(path: string): void {
     localStorage.setItem('path', path);
     this._path.next(path);
   }
@@ -113,7 +113,7 @@ export class MediaService implements OnDestroy {
    * Fetches files and folders from `/api/v1/photos`
    * Use to initiate BehaviorSubjects
    */
-  fetchDates() {
+  fetchDates(): Observable<IDates> {
     return this.http
       .get<IDates>('/api/v1/dates')
       .pipe(
@@ -127,7 +127,7 @@ export class MediaService implements OnDestroy {
    * Fetches files and folders from `/api/v1/photos`
    * Use to initiate BehaviorSubjects
    */
-  fetchMedia(filter: IFilter) {
+  fetchMedia(filter: IFilter): Observable<IMedia> {
     let params = new HttpParams()
       .set('year', filter.year);
 
@@ -148,7 +148,7 @@ export class MediaService implements OnDestroy {
   /**
    * Fetches all folders from `/api/v1/folders`
    */
-  fetchFolders() {
+  fetchFolders(): Observable<any> {
     return this.http.get('/api/v1/folders');
   }
 

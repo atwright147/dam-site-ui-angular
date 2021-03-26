@@ -9,11 +9,11 @@ export class RefineSelectionModalService {
   showRefineSelectionModal$ = this._showRefineSelectionModal.asObservable();
   value = this._showRefineSelectionModal.value;
 
-  show() {
+  show(): void {
     this._showRefineSelectionModal.next(true);
   }
 
-  hide() {
+  hide(): void {
     this._showRefineSelectionModal.next(false);
   }
 }

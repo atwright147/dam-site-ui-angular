@@ -2,7 +2,8 @@ import { AfterContentInit, ContentChildren, Directive, ElementRef, HostListener,
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { ThumbnailComponent } from '../../components/thumbnail/thumbnail.component';
 
-const range = (a: number, b: number) => Array(Math.abs(a - b) + 1).fill(a).map((v: number, i: number) => v + i * (a > b ? -1 : 1));
+// eslint-disable-next-line max-len
+const range = (a: number, b: number): number[] => Array(Math.abs(a - b) + 1).fill(a).map((v: number, i: number) => v + i * (a > b ? -1 : 1));
 
 @Directive({
   selector: '[appMultiCheck]'

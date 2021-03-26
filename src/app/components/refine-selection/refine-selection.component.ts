@@ -12,13 +12,13 @@ export class RefineSelectionComponent {
     private readonly refineSelectionModalService: RefineSelectionModalService,
   ) { }
 
-  @HostListener('document:keyup', ['$event']) hideSelectionRefinementModal(event: KeyboardEvent) {
+  @HostListener('document:keyup', ['$event']) hideSelectionRefinementModal(event: KeyboardEvent): void {
     if (event.key === 'Esc' || event.key === 'Escape') {
       this.refineSelectionModalService.hide();
     }
   }
 
-  close() {
+  close(): void {
     this.refineSelectionModalService.hide();
   }
 }

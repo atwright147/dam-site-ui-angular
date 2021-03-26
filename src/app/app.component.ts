@@ -21,7 +21,7 @@ export class AppComponent implements OnDestroy, OnInit {
   ) { }
 
   // using the `keydown` is bad for a11y but it is the only way to catch the `metaKey` property
-  @HostListener('document:keydown', ['$event']) showSelectionRefinementModal(event: KeyboardEvent) {
+  @HostListener('document:keydown', ['$event']) showSelectionRefinementModal(event: KeyboardEvent): void {
     if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
       if (!this.selected.length) {
         return;

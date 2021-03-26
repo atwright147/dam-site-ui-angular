@@ -32,14 +32,14 @@ export class ThumbnailComponent implements ControlValueAccessor {
 
   /* tslint:disable: semicolon */
   // Function to call when the model changes.
-  onChange = (value: boolean) => {
+  onChange = (value: boolean): void => {
     this.value = value;
   };
 
   // Function to call when the input is touched.
-  onTouched = () => {};
+  onTouched = (): void => {};
 
-  toggle() {
+  toggle(): void {
     if (!this.disabled) {
       this.value = !this.value;
       this.writeValue(this.value);

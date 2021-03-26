@@ -49,6 +49,7 @@
           "always"
         ],
         "no-underscore-dangle": 0,
+        "@typescript-eslint/explicit-function-return-type": ["error"],
         "import/order": "off"
       }
     },

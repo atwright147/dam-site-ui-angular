@@ -4,7 +4,6 @@ export class CustomErrorHandler implements ErrorHandler {
   constructor() { }
 
   handleError(err): void {
-    console.info('Custom ErrorHandler caught an error');
-    console.info(err);
+    console.info(err); // eslint-disable-line no-console
   }
 }

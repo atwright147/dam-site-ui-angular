@@ -21,7 +21,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     private readonly mediaService: MediaService,
   ) { }
 
-  @HostListener('document:keyup', ['$event']) keyEvent(event: KeyboardEvent) {
+  @HostListener('document:keyup', ['$event']) keyEvent(event: KeyboardEvent): void {
     const target = event.target as HTMLInputElement;
     if (target.type !== 'checkbox') {
       return;
@@ -63,7 +63,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
   keyDescOrder = (a, b): number => a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
   //#endregion
 
-  ngOnInit() {
+  ngOnInit(): void {
     const imagesSub = this.mediaService.images$.subscribe(
       (data) => this.images = data,
     );
@@ -71,7 +71,7 @@ export class FilmstripComponent implements OnInit, OnDestroy {
     this.subs.push(imagesSub);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 }
