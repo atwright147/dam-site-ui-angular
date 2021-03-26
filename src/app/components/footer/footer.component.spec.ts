@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/dot-notation */
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
@@ -25,5 +27,11 @@ describe('FooterComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('fields', () => {
+    it('selected$', () => {
+      expect(component.selected$).toEqual(component['mediaService'].selected$);
+    });
   });
 });
