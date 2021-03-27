@@ -82,7 +82,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   }
 
   ngAfterViewInit(): void {
-    this.change();
+    setTimeout(this.change);
   }
 
   ngAfterViewChecked(): void {
