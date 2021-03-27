@@ -8,7 +8,7 @@ import { MediaService } from '../../services/media.service';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  selected$ = this.mediaService.selected$;
+  readonly selected$ = this.mediaService.selected$;
 
   constructor(
     private readonly mediaService: MediaService,

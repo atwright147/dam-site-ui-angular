@@ -11,9 +11,9 @@ import { RefineSelectionModalService } from './services/refine-selection-modal.s
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnDestroy, OnInit {
-  showRefineSelectionModal$ = this.refineSelectionModalService.showRefineSelectionModal$;
-  selected: IFile[];
-  subs: Subscription[];
+  readonly showRefineSelectionModal$ = this.refineSelectionModalService.showRefineSelectionModal$;
+  private selected: IFile[];
+  private readonly subs: Subscription[];
 
   constructor(
     private readonly mediaService: MediaService,

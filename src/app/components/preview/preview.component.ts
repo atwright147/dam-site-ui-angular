@@ -8,7 +8,7 @@ import { MediaService } from '../../services/media.service';
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent {
-  previewSelection$ = this.mediaService.previewSelection$;
+  readonly previewSelection$ = this.mediaService.previewSelection$;
 
   constructor(
     private readonly mediaService: MediaService,

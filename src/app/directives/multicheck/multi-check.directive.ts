@@ -12,11 +12,11 @@ export class MultiCheckDirective implements AfterContentInit {
   @Input('appMultiCheck') formGroupName: string;
   @ContentChildren(ThumbnailComponent, { emitDistinctChangesOnly: true }) thumbnails: QueryList<ThumbnailComponent>;
 
-  hostElement: ElementRef<Element>;
-  formGroup: FormGroupDirective;
-  checkboxes: Element[];
-  startIndex = 0;
-  inputTargetState: boolean;
+  private readonly hostElement: ElementRef<Element>;
+  private readonly formGroup: FormGroupDirective;
+  private checkboxes: Element[];
+  private startIndex = 0;
+  private inputTargetState: boolean;
 
   constructor(
     el: ElementRef,

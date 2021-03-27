@@ -22,6 +22,7 @@ export class ThumbnailComponent implements ControlValueAccessor {
   @Input() imageId: string;
   @Input() index: number;
   @Input() value: boolean;
+
   orientationClassName = '';
   @Input()
   set orientation(value: string) {

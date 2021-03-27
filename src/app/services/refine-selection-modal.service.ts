@@ -5,9 +5,11 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class RefineSelectionModalService {
-  _showRefineSelectionModal = new BehaviorSubject(false);
-  showRefineSelectionModal$ = this._showRefineSelectionModal.asObservable();
-  value = this._showRefineSelectionModal.value;
+  private readonly _showRefineSelectionModal = new BehaviorSubject(false);
+
+  /* eslint-disable @typescript-eslint/member-ordering */
+  readonly showRefineSelectionModal$ = this._showRefineSelectionModal.asObservable();
+  /* eslint-enable @typescript-eslint/member-ordering */
 
   show(): void {
     this._showRefineSelectionModal.next(true);

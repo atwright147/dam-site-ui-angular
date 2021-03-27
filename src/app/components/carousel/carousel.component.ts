@@ -28,22 +28,19 @@ import { IFile } from '../../interfaces/files.interface';
 export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDestroy, OnInit {
   @ViewChild('scene') scene: ElementRef<HTMLElement>;
   @ViewChild('carousel') carousel: ElementRef<HTMLElement>;
-  @ViewChildren('cellContainer', { emitDistinctChangesOnly: true }) _cells: QueryList<ElementRef<HTMLElement>>;
+  @ViewChildren('cellContainer', { emitDistinctChangesOnly: true }) cells: QueryList<ElementRef<HTMLElement>>;
   height$ = this.resize$.pipe(map(entry => entry.contentRect.height));
   width$ = this.resize$.pipe(map(entry => entry.contentRect.width));
   selected: IFile[];
-
-  cells;
-
-  sceneRect: DOMRect;
-  cellCount: number;
-  cellHeight: number;
-  cellWidth: number;
-  isHorizontal = true;
-  radius: number;
-  rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
-  rotationIndex = 0;
-  theta: number;
+  private sceneRect: DOMRect;
+  private cellCount: number;
+  private cellHeight: number;
+  private cellWidth: number;
+  private isHorizontal = true;
+  private radius: number;
+  private rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
+  private rotationIndex = 0;
+  private theta: number;
 
   private readonly subs: Subscription[] = [];
 
@@ -85,7 +82,6 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   }
 
   ngAfterViewInit(): void {
-    this.cells = this._cells;
     this.change();
   }
 

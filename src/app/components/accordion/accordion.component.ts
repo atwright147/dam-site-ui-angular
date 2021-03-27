@@ -10,7 +10,8 @@ import { PanelComponent } from '../panel/panel.component';
 })
 export class AccordionComponent implements OnDestroy, AfterContentInit {
   @ContentChildren(PanelComponent, { emitDistinctChangesOnly: true }) panels: QueryList<PanelComponent>;
-  subscriptions: Subscription[] = [];
+
+  private readonly subs: Subscription[] = [];
 
   ngAfterContentInit(): void {
     const panelChangesSub = this.panels.changes.subscribe(
@@ -19,15 +20,15 @@ export class AccordionComponent implements OnDestroy, AfterContentInit {
           const sub = panel.toggle.subscribe(
             () => this.openPanel(panel),
           );
-          this.subscriptions.push(sub);
+          this.subs.push(sub);
         });
       },
     );
-    this.subscriptions.push(panelChangesSub);
+    this.subs.push(panelChangesSub);
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   openPanel(panel: PanelComponent): void {

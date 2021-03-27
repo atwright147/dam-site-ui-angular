@@ -4,7 +4,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   selector: '[appScrollHorizontal]'
 })
 export class ScrollHorizontalDirective {
-  hostElement: ElementRef<Element>;
+  private readonly hostElement: ElementRef<Element>;
 
   constructor(
     el: ElementRef,

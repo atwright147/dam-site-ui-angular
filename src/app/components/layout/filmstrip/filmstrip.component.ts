@@ -10,12 +10,13 @@ import { MediaService } from '../../../services/media.service';
   styleUrls: ['./filmstrip.component.scss']
 })
 export class FilmstripComponent implements OnInit, OnDestroy {
-  form = this.mediaService.form;
-  subs: Subscription[] = [];
-  selected$ = this.mediaService.selected$;
-  previewSelection$ = this.mediaService.previewSelection$;
-  orientations$ = this.mediaService.orientations$;
   images: IFile[] = [];
+  readonly form = this.mediaService.form;
+  readonly selected$ = this.mediaService.selected$;
+  readonly previewSelection$ = this.mediaService.previewSelection$;
+  readonly orientations$ = this.mediaService.orientations$;
+
+  private readonly subs: Subscription[] = [];
 
   constructor(
     private readonly mediaService: MediaService,
