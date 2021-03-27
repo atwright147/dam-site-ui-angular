@@ -91,6 +91,11 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
         this.cellCount = this.cells.length;
         this.change();
       });
+
+      this.resize$.subscribe(
+        // TODO: is there a more efficient way of changing the carousel radius?
+        () => this.change(),
+      );
   }
 
   rotate(): void {
