@@ -1,4 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { IFile } from './interfaces/files.interface';
@@ -21,7 +22,7 @@ export class AppComponent implements OnDestroy, OnInit {
   ) { }
 
   // using the `keydown` is bad for a11y but it is the only way to catch the `metaKey` property
-  @HostListener('document:keydown', ['$event']) showSelectionRefinementModal(event: KeyboardEvent): void {
+  @HostListener('document:keydown', ['$event']) globalKeyboardEventHandler(event: KeyboardEvent): void {
     if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
       if (!this.selected.length) {
         return;
@@ -39,6 +40,13 @@ export class AppComponent implements OnDestroy, OnInit {
       } else {
         this.refineSelectionModalService.show();
       }
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key === 'a') {
+      event.preventDefault();
+
+      const checkboxes = this.mediaService.form.get('checkboxes') as FormGroup;
+      Object.keys(checkboxes.controls).forEach((key) => (checkboxes.controls[key] as AbstractControl).setValue(true));
     }
   }
 
