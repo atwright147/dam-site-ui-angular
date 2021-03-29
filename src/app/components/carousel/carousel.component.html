@@ -1,6 +1,6 @@
 <pre>Height: {{height$ | async}}, Width: {{width$ | async}}</pre>
 
-<div class="scene" #scene>
+<div class="scene" #scene [ngStyle]="{width: ((width$ | async) / 3)+'px', height: ((width$ | async) / 3)+'px'}">
   <div class="carousel" #carousel>
     <div *ngFor="let item of selected" class="carousel_cell__container" #cellContainer>
       <div class="carousel__cell" [ngStyle]="{'background-image': 'url(&quot;/api/v1/thumb/' + item.id + '&quot;)'}"></div>
