@@ -14,9 +14,12 @@ import {
 import { map } from 'rxjs/operators';
 import { NgResizeObserver, ngResizeObserverProviders } from 'ng-resize-observer';
 import { Subscription } from 'rxjs';
+import { trigger, transition, style, animate, state } from '@angular/animations';
 
 import { MediaService } from '../../services/media.service';
 import { IFile } from '../../interfaces/files.interface';
+
+const TRANSLATE_DISTANCE = 250;
 
 @Component({
   selector: 'app-carousel',
@@ -24,6 +27,12 @@ import { IFile } from '../../interfaces/files.interface';
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [...ngResizeObserverProviders],
+  animations: [
+    trigger('slideDownFade', [
+      state('void', style({ opacity: 0, transform: `translateY(${TRANSLATE_DISTANCE}px) translateZ(${TRANSLATE_DISTANCE}px)` })),
+      transition(':leave', animate('250ms ease-out')),
+    ]),
+  ],
 })
 export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDestroy, OnInit {
   @ViewChild('scene') scene: ElementRef<HTMLElement>;
@@ -49,8 +58,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
     private readonly resize$: NgResizeObserver,
   ) {}
 
-  @HostListener('window:keyup', ['$event'])
-  onKeyup(event: KeyboardEvent): void {
+  @HostListener('window:keyup', ['$event']) onKeyup(event: KeyboardEvent): void {
     switch (event.key) {
       case 'ArrowLeft':
         this.rotationIndex--;
@@ -64,7 +72,6 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
 
       case 'ArrowDown':
         this.mediaService.removeFromSelection(this.cellIndex);
-        this.change();
         break;
     }
   }
@@ -89,7 +96,6 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
     this.cells.changes.subscribe(
       () => {
         this.cellCount = this.cells.length;
-        this.change();
       });
 
       this.resize$.subscribe(
@@ -143,6 +149,10 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   onOrientationChange(): void {
     this.isHorizontal = true;
     this.rotateFn = this.isHorizontal ? 'rotateY' : 'rotateX';
+    this.change();
+  }
+
+  onAnimEnd(event): void {
     this.change();
   }
 
