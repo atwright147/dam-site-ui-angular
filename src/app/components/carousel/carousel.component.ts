@@ -128,20 +128,11 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
     const cellSize = this.isHorizontal ? this.cellWidth : this.cellHeight;
     this.radius = Math.round((cellSize / 2) / Math.tan(Math.PI / this.cellCount));
 
-    for (let i = 0; i < this.cellCount; i++) {
-      const cell = this.cells.get(i);
-
-      if (i < this.cellCount) {
-        // visible cell
-        cell.nativeElement.style.opacity = '1';
-        const cellAngle = this.theta * i;
-        cell.nativeElement.style.transform = `${this.rotateFn}(${cellAngle}deg) translateZ(${this.radius}px)`;
-      } else {
-        // hidden cell
-        cell.nativeElement.style.opacity = '0';
-        cell.nativeElement.style.transform = 'none';
-      }
-    }
+    this.cells.forEach((cell, index) => {
+      cell.nativeElement.style.opacity = '1';
+      const cellAngle = this.theta * index;
+      cell.nativeElement.style.transform = `${this.rotateFn}(${cellAngle}deg) translateZ(${this.radius}px)`;
+    });
 
     this.rotate();
   };
