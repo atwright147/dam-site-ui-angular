@@ -19,7 +19,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 import { MediaService } from '../../services/media.service';
 import { IFile } from '../../interfaces/files.interface';
 
-const TRANSLATE_DISTANCE = 250;
+// const TRANSLATE_DISTANCE = 250;
 
 @Component({
   selector: 'app-carousel',
@@ -29,7 +29,9 @@ const TRANSLATE_DISTANCE = 250;
   providers: [...ngResizeObserverProviders],
   animations: [
     trigger('slideDownFade', [
-      state('void', style({ opacity: 0, transform: `translateY(${TRANSLATE_DISTANCE}px) translateZ(${TRANSLATE_DISTANCE}px)` })),
+      // TODO: figure out why cells spin when animating translations
+      // state('void', style({ opacity: 0, transform: `translateY(${TRANSLATE_DISTANCE}px) translateZ(${TRANSLATE_DISTANCE}px)` })),
+      state('void', style({ opacity: 0 })),
       transition(':leave', animate('250ms ease-out')),
     ]),
   ],
