@@ -8,6 +8,7 @@ import {
   OnDestroy,
   OnInit,
   QueryList,
+  Renderer2,
   ViewChild,
   ViewChildren
 } from '@angular/core';
@@ -56,7 +57,9 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   private readonly subs: Subscription[] = [];
 
   constructor(
+    private readonly hostElement: ElementRef,
     private readonly mediaService: MediaService,
+    private readonly renderer: Renderer2,
     private readonly resize$: NgResizeObserver,
   ) {}
 
@@ -73,7 +76,26 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
         break;
 
       case 'ArrowDown':
-        this.mediaService.removeFromSelection(this.cellIndex);
+        console.info(this.cellIndex);
+        console.info(this.cells.get(this.cellIndex));
+        const node = this.cells.get(this.cellIndex).nativeElement.children.item(0);
+
+        const rect = node.getBoundingClientRect();
+        const nodeClone = node.cloneNode();
+
+        console.info(rect);
+
+        this.renderer.setStyle(nodeClone, 'position', 'absolute');
+        this.renderer.setStyle(nodeClone, 'top', `${rect.top}px`);
+        this.renderer.setStyle(nodeClone, 'left', `${rect.left}px`);
+        this.renderer.setStyle(nodeClone, 'height', `${rect.width}px`);
+        this.renderer.setStyle(nodeClone, 'width', `${rect.height}px`);
+        this.renderer.removeStyle(nodeClone, 'transform');
+        // this.renderer.removeClass(nodeClone, 'carousel__cell');
+
+        this.renderer.appendChild(this.hostElement.nativeElement, nodeClone);
+
+        // this.mediaService.removeFromSelection(this.cellIndex);
         break;
     }
   }
