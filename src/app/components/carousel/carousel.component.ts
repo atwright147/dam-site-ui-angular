@@ -44,7 +44,6 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   height$ = this.resize$.pipe(map(entry => entry.contentRect.height));
   width$ = this.resize$.pipe(map(entry => entry.contentRect.width));
   selected: IFile[];
-  private animationEndUnlisten: () => void;
   private sceneRect: DOMRect;
   private cellCount: number;
   private cellHeight: number;
@@ -55,6 +54,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   private rotationIndex = 0;
   private theta: number;
 
+  private readonly animationEndUnlisten: () => void;
   private readonly subs: Subscription[] = [];
 
   constructor(
@@ -97,6 +97,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
           const anim = elementToRemove.animate([{ transform: 'translateY(250px)', opacity: 0 }], 250);
           anim.onfinish = (): void => this.renderer.removeChild(this.hostElement.nativeElement, elementToRemove);
         });
+
         this.mediaService.removeFromSelection(this.cellIndex);
         break;
     }
