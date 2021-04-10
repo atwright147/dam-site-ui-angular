@@ -44,6 +44,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   height$ = this.resize$.pipe(map(entry => entry.contentRect.height));
   width$ = this.resize$.pipe(map(entry => entry.contentRect.width));
   selected: IFile[];
+  private animationEndUnlisten: () => void;
   private sceneRect: DOMRect;
   private cellCount: number;
   private cellHeight: number;
@@ -57,7 +58,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
   private readonly subs: Subscription[] = [];
 
   constructor(
-    private readonly hostElement: ElementRef,
+    private readonly hostElement: ElementRef<HTMLElement>,
     private readonly mediaService: MediaService,
     private readonly renderer: Renderer2,
     private readonly resize$: NgResizeObserver,
@@ -76,26 +77,27 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
         break;
 
       case 'ArrowDown':
-        console.info(this.cellIndex);
-        console.info(this.cells.get(this.cellIndex));
         const node = this.cells.get(this.cellIndex).nativeElement.children.item(0);
-
         const rect = node.getBoundingClientRect();
+
         const nodeClone = node.cloneNode();
-
-        console.info(rect);
-
         this.renderer.setStyle(nodeClone, 'position', 'absolute');
         this.renderer.setStyle(nodeClone, 'top', `${rect.top}px`);
-        this.renderer.setStyle(nodeClone, 'left', `${rect.left}px`);
-        this.renderer.setStyle(nodeClone, 'height', `${rect.width}px`);
-        this.renderer.setStyle(nodeClone, 'width', `${rect.height}px`);
+        this.renderer.setStyle(nodeClone, 'left', `${rect.left + 1}px`);
+        this.renderer.setStyle(nodeClone, 'height', `${rect.height}px`);
+        this.renderer.setStyle(nodeClone, 'width', `${rect.width}px`);
         this.renderer.removeStyle(nodeClone, 'transform');
-        // this.renderer.removeClass(nodeClone, 'carousel__cell');
-
+        this.renderer.setStyle(nodeClone, 'transform', 'rotateX(20deg)');
+        this.renderer.setProperty(nodeClone, 'id', 'anim-remove');
         this.renderer.appendChild(this.hostElement.nativeElement, nodeClone);
 
-        // this.mediaService.removeFromSelection(this.cellIndex);
+        let elementToRemove: HTMLDivElement;
+        setTimeout(() => {
+          elementToRemove = this.hostElement.nativeElement.querySelector<HTMLDivElement>('#anim-remove');
+          const anim = elementToRemove.animate([{ transform: 'translateY(250px)', opacity: 0 }], 250);
+          anim.onfinish = (): void => this.renderer.removeChild(this.hostElement.nativeElement, elementToRemove);
+        });
+        this.mediaService.removeFromSelection(this.cellIndex);
         break;
     }
   }
@@ -110,6 +112,7 @@ export class CarouselComponent implements AfterViewChecked, AfterViewInit, OnDes
 
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
+    this.animationEndUnlisten();
   }
 
   ngAfterViewInit(): void {
