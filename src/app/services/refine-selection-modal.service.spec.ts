@@ -13,4 +13,20 @@ describe('RefineSelectionModalService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  describe('show()', () => {
+    it('should show the modal', () => {
+      service.hide();
+      service.show();
+      service.showRefineSelectionModal$.subscribe((value) => expect(value).toEqual(true));
+    });
+  });
+
+  describe('hide()', () => {
+    it('should hide the modal', () => {
+      service.show();
+      service.hide();
+      service.showRefineSelectionModal$.subscribe((value) => expect(value).toEqual(false));
+    });
+  });
 });
