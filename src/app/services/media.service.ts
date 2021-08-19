@@ -12,9 +12,20 @@ export interface IMedia {
   media: IFile[];
 }
 
+export interface IMonths {
+  year: string;
+  monthName: string;
+  monthIndex: number;
+}
+
+export interface IYear {
+  year: string;
+  months: IMonths[];
+}
+
 export interface IDates {
   quantity: number;
-  dates: string[];
+  dates: IYear[];
 }
 
 export interface IFilter {
@@ -34,14 +45,14 @@ export class MediaService implements OnDestroy {
   private readonly _orientations = new BehaviorSubject<Record<string, string>>({});
   private readonly _selected = new BehaviorSubject<IFile[]>([]);
   private readonly _previewSelection = new BehaviorSubject<IFile[]>([]);
-  private readonly _dates = new BehaviorSubject<string[]>([]);
+  private readonly _dates = new BehaviorSubject<IYear[]>([]);
 
   /* eslint-disable @typescript-eslint/member-ordering */
   readonly images$: Observable<IFile[]> = this._images.asObservable();
   readonly orientations$: Observable<Record<string, string>> = this._orientations.asObservable();
   readonly selected$: Observable<IFile[]> = this._selected.asObservable();
   readonly previewSelection$: Observable<IFile[]> = this._previewSelection.asObservable();
-  readonly dates$: Observable<string[]> = this._dates.asObservable();
+  readonly dates$: Observable<IYear[]> = this._dates.asObservable();
   /* eslint-enable @typescript-eslint/member-ordering */
 
   constructor(
