@@ -156,13 +156,6 @@ export class MediaService implements OnDestroy {
       );
   }
 
-  /**
-   * Fetches all folders from `/api/v1/folders`
-   */
-  fetchFolders(): Observable<any> {
-    return this.http.get('/api/v1/folders');
-  }
-
   getOrientation(images: IFile[] = []): Record<string, string> {
     const imageOrientations: Record<string, string> = {};
     images.forEach(image => {
