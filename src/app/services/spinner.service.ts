@@ -16,6 +16,7 @@ export class SpinnerService {
   }
 
   remove(): void {
+    /* istanbul ignore else */
     if (this._counter.value > 0) {
       this._counter.next(this._counter.value - 1);
     }
