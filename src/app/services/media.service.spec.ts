@@ -151,6 +151,79 @@ describe('MediaService', () => {
     });
   });
 
+  describe('get path$()', () => {
+    const mockPath = '/set/path/test';
+
+    describe('given path observable has a non-zero length value', () => {
+      beforeEach(() => {
+        service.setPath(mockPath);
+      });
+
+      it('should not access localStorage', () => {
+        const localStorageSetItemSpy = spyOn(localStorage, 'getItem');
+
+        expect(localStorageSetItemSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it('should return value of observable', () => {
+        service.path$.subscribe(
+          (value) => expect(value).toBe(mockPath),
+        );
+      });
+    });
+
+    describe('given path observable has value of zero length', () => {
+      describe('given there is no path saved in localStorage', () => {
+        it('should return "/"', () => {
+          spyOn(localStorage, 'getItem').and.returnValue('');
+
+          service.path$.subscribe(
+            (value) => expect(value).toBe('/'),
+          );
+        });
+      });
+
+      describe('given there is no path saved in localStorage', () => {
+        it('should return the path from localStorage', () => {
+          spyOn(localStorage, 'getItem').and.returnValue('/mock/path');
+
+          service.path$.subscribe(
+            (value) => expect(value).toBe('/mock/path'),
+          );
+        });
+
+        it('should next() the path observable', () => {
+          const pathNextSpy = spyOn(service['_path'], 'next');  // eslint-disable-line @typescript-eslint/dot-notation
+          spyOn(localStorage, 'getItem').and.returnValue('/mock/path');
+
+          service.path$.subscribe(
+            () => expect(pathNextSpy).toHaveBeenCalledWith('/mock/path'),
+          );
+        });
+      });
+    });
+  });
+
+  describe('setPath()', () => {
+    const mockPath = '/set/path/test';
+
+    it('should set path in localStorage', () => {
+      const localStorageSetItemSpy = spyOn(localStorage, 'setItem');
+
+      service.setPath(mockPath);
+
+      expect(localStorageSetItemSpy).toHaveBeenCalledWith('path', mockPath);
+    });
+
+    it('should next() the path observable', () => {
+      const pathNextSpy = spyOn(service['_path'], 'next');  // eslint-disable-line @typescript-eslint/dot-notation
+
+      service.setPath(mockPath);
+
+      expect(pathNextSpy).toHaveBeenCalledWith(mockPath);
+    });
+  });
+
   describe('fetchDates()', () => {
     it('should call http.get with correct args', () => {
       const expectedUrl = '/api/v1/dates';
