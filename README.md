@@ -1,5 +1,7 @@
 # DamUi
 
+A user interface to allow users to view and catalogue their photography collection on a NAS. Click here to see a basic demo of it in action: https://www.youtube.com/watch?v=gFwVGKbKIvU
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
 
 ## Development server
