@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
 
 import { CarouselComponent } from './carousel.component';
 
-describe('CarouselComponent', () => {
+xdescribe('CarouselComponent', () => {
   let component: CarouselComponent;
   let fixture: ComponentFixture<CarouselComponent>;
 
