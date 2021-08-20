@@ -136,6 +136,21 @@ describe('MediaService', () => {
     });
   });
 
+  describe('ngOnDestroy()', () => {
+    it('should unsubscribe', () => {
+      const unsubscribeSpy = jasmine.createSpy('unsubscribe');
+      const mockSubscription1 = { unsubscribe: unsubscribeSpy };
+      const mockSubscription2 = { unsubscribe: unsubscribeSpy };
+
+      // @ts-ignore (because `subs` is readonly)
+      service['subs'] = [mockSubscription1, mockSubscription2];  // eslint-disable-line @typescript-eslint/dot-notation
+
+      service.ngOnDestroy();
+
+      expect(unsubscribeSpy).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('fetchDates()', () => {
     it('should call http.get with correct args', () => {
       const expectedUrl = '/api/v1/dates';
