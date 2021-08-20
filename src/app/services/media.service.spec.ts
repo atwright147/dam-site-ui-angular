@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { IDates, MediaService } from './media.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpRequest } from '@angular/common/http';
 
 // #region Mock Data
@@ -122,8 +122,9 @@ describe('MediaService', () => {
   describe('constructor()', () => {
     it('should create a FormGroup', () => {
       const mediaService = new MediaService({} as any, new FormBuilder());
-      expect(Object.getPrototypeOf(mediaService.form).constructor.name).toEqual('FormGroup');
-      expect(Object.getPrototypeOf(mediaService.form.controls.checkboxes).constructor.name).toEqual('FormGroup');
+
+      expect(mediaService.form).toBeInstanceOf(FormGroup);
+      expect(mediaService.form.controls.checkboxes).toBeInstanceOf(FormGroup);
     });
 
     it('should call init()');
