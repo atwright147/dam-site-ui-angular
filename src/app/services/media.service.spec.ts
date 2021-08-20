@@ -136,6 +136,8 @@ describe('MediaService', () => {
     });
   });
 
+  describe('init()', () => {});
+
   describe('ngOnDestroy()', () => {
     it('should unsubscribe', () => {
       const unsubscribeSpy = jasmine.createSpy('unsubscribe');
