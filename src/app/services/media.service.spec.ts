@@ -127,7 +127,13 @@ describe('MediaService', () => {
       expect(mediaService.form.controls.checkboxes).toBeInstanceOf(FormGroup);
     });
 
-    it('should call init()');
+    it('should call init()', () => {
+      // https://stackoverflow.com/a/63825465/633056
+      const initSpy = spyOn(MediaService.prototype, 'init').and.stub();
+      new MediaService({} as any, new FormBuilder());
+
+      expect(initSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('fetchDates()', () => {
