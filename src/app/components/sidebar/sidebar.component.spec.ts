@@ -2,6 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 
+import { AccordionComponent } from '../accordion/accordion.component';
+import { PanelComponent } from '../panel/panel.component';
 import { SidebarComponent } from './sidebar.component';
 
 describe('SidebarComponent', () => {
@@ -10,7 +12,11 @@ describe('SidebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SidebarComponent ],
+      declarations: [
+        AccordionComponent,
+        PanelComponent,
+        SidebarComponent,
+      ],
       imports: [ HttpClientTestingModule ],
       providers: [ FormBuilder ]
     })

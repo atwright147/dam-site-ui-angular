@@ -1,14 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { RefineSelectionComponent } from './refine-selection.component';
+import { CarouselComponent } from '../carousel/carousel.component';
 
-describe('RefineSelectionComponent', () => {
+xdescribe('RefineSelectionComponent', () => {
   let component: RefineSelectionComponent;
   let fixture: ComponentFixture<RefineSelectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RefineSelectionComponent ]
+      declarations: [
+        RefineSelectionComponent,
+        CarouselComponent,
+      ],
+      imports: [
+        HttpClientModule,
+      ],
+      providers: [
+        FormBuilder,
+      ],
     })
     .compileComponents();
   });
