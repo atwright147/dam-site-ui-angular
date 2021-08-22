@@ -31,7 +31,6 @@ export class ThumbnailComponent implements ControlValueAccessor {
 
   constructor(public elem: ElementRef) { }
 
-  /* tslint:disable: semicolon */
   // Function to call when the model changes.
   onChange = (value: boolean): void => {
     this.value = value;
@@ -46,7 +45,6 @@ export class ThumbnailComponent implements ControlValueAccessor {
       this.writeValue(this.value);
     }
   }
-  /* tslint:enable: semicolon */
 
   // Allows Angular to update the model.
   // Update the model and changes needed for the view here.

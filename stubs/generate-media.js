@@ -55,14 +55,12 @@ for (let index = 0; index < quantity; index++) {
   const year = fullDate.getFullYear();
   const month = fullDate.getMonth() + 1;
 
-  // tslint:disable: no-string-literal
   model['id'] = faker.random.uuid();
   model['filename'] = `image-${index + 1}`;
   model['path'] = path;
   model['camera'] = cameras[faker.random.number({ max: 2 })];
   model['lens'] = lenses[faker.random.number({ max: 2 })];
   model['datetime'] = { date, year, month };
-  // tslint:enable: no-string-literal
 
   media.push(model);
 }
