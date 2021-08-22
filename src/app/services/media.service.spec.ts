@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { IDates, MediaService } from './media.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpRequest } from '@angular/common/http';
 
 // #region Mock Data
@@ -317,6 +317,102 @@ describe('MediaService', () => {
       const req = httpTestingController.expectOne('/api/v1/photos?year=2001&month=0');
 
       req.flush(mockPhotosResponse);
+    });
+  });
+
+  describe('getOrientation()', () => {
+    it('should return multiple orientations', () => {
+      expect(service.getOrientation(mockPhotosResponse.media)).toEqual({ 1: '1', 2: '1' });
+    });
+
+    describe('given a missing Orientation property', () => {
+      it('should return a default of "0"', () => {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        const fileWithMissingOrientationProp = {
+          id: 5,
+          ImageUniqueID: '0c560ff6ccb6467c86380671ba49ae15',
+          FileName: '20120117-e01.CR2',
+          ImageHeight: '3456',
+          ImageWidth: '5184',
+          // Orientation: '1',
+          FileSize: '24 MiB',
+          FileType: 'CR2',
+          FileTypeExtension: 'cr2',
+          MIMEType: 'image/x-canon-cr2',
+          MajorBrand: null,
+          Make: 'Canon',
+          Model: 'Canon EOS Kiss X4',
+          ExposureTime: '1/200',
+          FNumber: '5.6',
+          ISO: '100',
+          FocalLength: '28.0 mm',
+          SerialNumber: '2213309621',
+          Rating: null,
+          MegaPixels: null,
+          DateTimeOriginal: '2012-02-17T11:26:39.000Z',
+          created_at: '2021-01-17T00:38:46.658Z',
+          updated_at: '2021-01-17T00:38:46.660Z'
+        };
+        /* eslint-enable @typescript-eslint/naming-convention */
+
+        expect(service.getOrientation([fileWithMissingOrientationProp] as any)).toEqual({ 5: '0' });
+      });
+    });
+  });
+
+  describe('setFilter()', () => {
+    it('should fetch media', () => {
+      const fetchMediaSubscribeSpy = spyOn(service, 'fetchMedia').and.returnValue(
+        { subscribe: jasmine.createSpy('fetchMedia.subscribe') } as any
+      );
+
+      service.setFilter(['2001', 5]);
+
+      expect(fetchMediaSubscribeSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should fetch media with correct args', () => {
+      const fetchMediaSpy = spyOn(service, 'fetchMedia').and.returnValue(
+        { subscribe: jasmine.createSpy('fetchMedia.subscribe') } as any
+      );
+
+      service.setFilter(['2001', 5]);
+
+      expect(fetchMediaSpy).toHaveBeenCalledWith({ year: '2001', month: 5 });
+    });
+
+    it('should save filter to localStorage', () => {
+      spyOn(service, 'fetchMedia').and.returnValue(
+        { subscribe: jasmine.createSpy('fetchMedia.subscribe') } as any
+      );
+      const localStorageSetItemSpy = spyOn(localStorage, 'setItem');
+
+      service.setFilter(['2001', 5]);
+
+      expect(localStorageSetItemSpy).toHaveBeenCalledWith('filter', JSON.stringify({ year: '2001', month: 5 }));
+    });
+  });
+
+  describe('removeFromSelection()', () => {
+    const partialFileList = [
+      { id: 1 },
+      { id: 2 },
+      { id: 3 },
+    ];
+
+    it('should remove the chosen item from the selection', () => {
+      const checkboxesForm = service.form.get('checkboxes') as FormGroup;
+        // eslint-disable-next-line @typescript-eslint/dot-notation
+      spyOnProperty(service['_selected'], 'value', 'get').and.returnValue([{ id: 1 }, { id: 2 }, { id: 3 }]);
+
+      partialFileList.forEach((item) => {
+        checkboxesForm.addControl(`${item.id}`, new FormControl(true));
+      });
+
+      service.removeFromSelection(1);
+
+      expect(checkboxesForm.value).toEqual({ 1: true, 2: false, 3: true });
+      expect(true).toBe(true);
     });
   });
 });

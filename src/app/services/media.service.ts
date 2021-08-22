@@ -158,7 +158,7 @@ export class MediaService implements OnDestroy {
 
   getOrientation(images: IFile[] = []): Record<string, string> {
     const imageOrientations: Record<string, string> = {};
-    images.forEach(image => {
+    images.forEach((image) => {
       imageOrientations[image.id] = image.Orientation ?? '0';
     });
     return imageOrientations;
