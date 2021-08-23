@@ -11,7 +11,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ThumbnailComponent),
+      useExisting: forwardRef(/* istanbul ignore next */() => ThumbnailComponent),
       multi: true
     }
   ],
@@ -37,6 +37,7 @@ export class ThumbnailComponent implements ControlValueAccessor {
   };
 
   // Function to call when the input is touched.
+  /* istanbul ignore next */
   onTouched = (): void => {};
 
   toggle(): void {
